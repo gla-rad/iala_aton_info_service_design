@@ -42,7 +42,7 @@ Data Receiver and Data Consumer:
 
 ## Client-initiated Retrieval of AtoN Information {#sec:dynamic_behaviour_client_init_retrieval}
 
-The client-initiated retrieval is triggered by the consumer consumer, when they issue a request on an appropriate AtoN information data receiver (i.e. Get and Get Summary). This functionality covers ***Use Case #1***, ***Use Case #2*** and ***Use Case #4***, as outlined in relevant service specification [@cite:iala-aton_info_service_spec]. All three use cases can be achieved by two methods:
+The client-initiated retrieval is triggered by the consumer, when they issue a request on an appropriate AtoN information data receiver (i.e. Get and Get Summary). This functionality covers ***Use Case #1***, ***Use Case #2*** and ***Use Case #4***, as outlined in relevant service specification [@cite:iala-aton_info_service_spec]. All three use cases can be achieved by two methods:
 
 1. By directly requesting specific S-125 datasets, using the operation parameters of the Get operation, or;
 2. By requesting the S-125 dataset summary information through the Get Summary operation first, and then using the provided dataset reference identifiers, to retrieve the corresponding S-125 datasets. 

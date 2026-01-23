@@ -1,8 +1,8 @@
 # IALA G1155 Maritime Service Description for the MS-2 Aids to Navigation Service (DRAFT)
 
-Interested in the MS-2 Aids to Navigation Maritime Service? Then you've come to the right place!
+Interested in the Provision of AtoN information to End-Users? Then you've come to the right place!
 
-This repository contains materials used by IALA ARM Working Group 2 in drafting the MS-2 Maritime Service Description.
+This repository contains materials used by IALA ARM Working Group 2 in drafting the G1128 Service Design for the AtoN Information Provision to End-Users using IEC 63173-2 (SECOM).
 
 ## Repository Structure
 
@@ -28,4 +28,4 @@ The repository is organized as follows:
 
 If you're interested in contributing to the development of the Guideline, please read the [Contributor's Guide](source/howto/how_to_contribute.md) and follow the instructions therein. In particular, your attention is drawn to the [Recommended Workflow](source/howto/how_to_contribute.md#recommended-workflow) section. A [video tutorial](https://youtube.com/playlist?list=PL8kqeDcGpskrUfczbMjfbkRz3qvxzXHCn&si=GHZU6r0Gv6hnfN1W) demonstrating the recommended workflow is also available.
 
-**Avoid direct changes to the `main` branch.** Instead, create a new branch for your changes and submit a pull request. This will allow your changes to be reviewed and discussed before they are merged into the `main` branch.
+**Avoid direct changes to the `master` branch.** Instead, create a new branch for your changes and submit a pull request. This will allow your changes to be reviewed and discussed before they are merged into the `master` branch.
