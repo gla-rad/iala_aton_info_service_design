@@ -15,13 +15,18 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '20'
+          python-version: '3.11'
 
-      - name: Install mermaid-cli
-        run: npm install -g @mermaid-js/mermaid-cli
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install python-docx==1.1.0
+          python -m pip install docxcompose==1.4.0
+          python -m pip install mermaid-cli==0.1.2
+          python -m playwright install chromium
 
       - name: Process Mermaid Diagrams
         run: |
@@ -52,6 +57,7 @@ jobs:
             --standalone
             -f markdown+rebase_relative_paths+markdown_in_html_blocks
             --lua-filter source/utils/parse_html_tables.lua
+            --lua-filter source/utils/page_break.lua
             -F pandoc-crossref
             --citeproc
             --csl resources/ieee-with-url.csl
@@ -70,17 +76,7 @@ jobs:
             source/guideline/acronyms.md
             source/guideline/references.md
             source/guideline/annex-a.md
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install python-docx==1.1.0
-          pip install docxcompose==1.4.0
+            source/guideline/annex-b.md
 
       - name: Concatenate Guideline front matter and body
         run: |

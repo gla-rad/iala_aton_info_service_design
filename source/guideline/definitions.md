@@ -20,8 +20,8 @@ The definitions of terms used in this IALA Guideline can be found in the Interna
 <tr>
   <td>Message Exchange Pattern</td>
   <td>Describes the principles two different parts of a message passing system (in our case: the service provider and the service consumer) use to interact and communicate with each other.  Examples:
-  </p> In the Request/Response MEP, the service consumer sends a request to the service provider to obtain certain information; the service provider provides the requested information in a dedicated response.
-  </p>In the Publish/Subscribe MEP, the service consumer establishes a subscription with the service provider to obtain certain information; the service provider publishes information (either in regular intervals or upon change) to all subscribed service consumers.</td>
+  </br> In the Request/Response MEP, the service consumer sends a request to the service provider to obtain certain information; the service provider provides the requested information in a dedicated response.
+  </br>In the Publish/Subscribe MEP, the service consumer establishes a subscription with the service provider to obtain certain information; the service provider publishes information (either in regular intervals or upon change) to all subscribed service consumers.</td>
 </tr>
 </tbody>
 </table>
