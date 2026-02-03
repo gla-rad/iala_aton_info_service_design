@@ -21,8 +21,8 @@ For all interfaces, the following parameter values must be used when applicable:
 
 * ***containerType*** - should match the container type used to package the AtoN information (i.e. "0" for S-125 datasets and "1" for S-100 Exchange-Sets).
 * ***dataProductType*** - must always be "S-125".
-* ***dataProductVersion*** -must be the S-125 version expected.
-* ***exchangeMetadata*** - must contain all field mandated by SECOM for the secure exchange of AtoN information.
+* ***dataProductVersion*** - must be the S-125 version expected.
+* ***exchangeMetadata*** - must contain all fields mandated by SECOM for the secure exchange of AtoN information.
 * ***protectionScheme*** - must always be "SECOM".
 * ***transactionIdentifier*** (transactionId) - must be a UUID. It must be unique for each transaction.
 
@@ -114,7 +114,7 @@ The **productVersion** describes the specific version of the data product specif
 
 The **geometry** describes geographical criteria for the data requested. The geometry is given as a one-line WKT formatted string and can contain one or more geospatial objects. 
 
-The **unlocode** describes with 5 characters the UN code for city or other area, such as a port. The `unlocode` is a list administered by UN and can be found online. Many`unlocode`s have a position in longitude/latitude attached, but not all. In most cases the `unlocode` will be used as text only but this may depend on the service developer.
+The **unlocode** describes with 5 characters the UN code for city or other area, such as a port. The `unlocode` is a list administered by UN and can be found online. Many `unlocode`s have a position in longitude/latitude attached, but not all. In most cases the `unlocode` will be used as text only but this may depend on the service developer.
 
 The **validFrom**/**validTo** describes the requested validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ.
 
@@ -251,7 +251,7 @@ The operation interface consumes the following consumer interfaces:
 * Upload
 * Subscription Notification
 
-The Upload consumer interface can be used by the data provider to push bew and/or updated S-125 datasets to the subscribed service consumer. The Subscription Notification consumer interface on the other hand, is used to inform the consumer that on the status of the subscription, i.e., when it has been successfully activated or removed. More information on this operation can be found in [@sec:dynamic_behaviour_client_init_retrieval]. Note that for each new subscription, a Subscription Identifier should be made available to the consumer though the interface’s response.
+The Upload consumer interface can be used by the data provider to push new and/or updated S-125 datasets to the subscribed service consumer. The Subscription Notification consumer interface on the other hand, is used to inform the consumer that on the status of the subscription, i.e., when it has been successfully activated or removed. More information on this operation can be found in [@sec:dynamic_behaviour_client_init_retrieval]. Note that for each new subscription, a Subscription Identifier should be made available to the consumer though the interface’s response.
 
 The operation supports multiple filter parameters, presented in more detail in [@tbl:get_subscription_operation_parameters]. To ensure the authenticity of the operation request, the filter parameters are included within a signed SECOM envelope structure. Data provider instances are required to support all referenced filter parameters.
 
@@ -269,7 +269,7 @@ All criteria for the subscription are optional. If none are provided, all author
 | unlocode | String | 0..1 | UN/LOCODE (United Nations Code for Trade and Transport Locations) of a defined object (e.g., “CN” for China). |
 | subscriptionPeriodStart | DateTime | 0..1 | The start date and time for which the subscription is active. |
 | subscriptionPeriodEnd | DateTime | 0..1 | The end date and time for which the subscription is active. |
-| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service Attribute Messages within subscription are sent to callbackEndpoint/object. If not availalble, the baseUrl needs to be available through search service. |
+| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service Attribute Messages within subscription are sent to callbackEndpoint/object. If not available, the baseUrl needs to be available through search service. |
 | pushAll | Boolean | 0..1 | Flag for sending an initial set of data within requested subscription and then start the subscription.<br/> If false, only data updates from the start of the subscription will be sent. |
 
 : The Subscription Operation Parameters. {#tbl:get_subscription_operation_parameters}

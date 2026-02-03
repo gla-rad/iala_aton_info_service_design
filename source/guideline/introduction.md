@@ -1,6 +1,6 @@
 # Introduction {#sec:introduction}
 
-This document specifies the design of the "Provision of AtoN Information to End-Users" service according to the technical service specification [@cite:iala-aton_info_service_spec] using the IEC SECOM [@cite:iec-63173-2] standard as the transport mechanism for route exchange. This one of the core technical service included in the "MS-2 - Aids to Navigation" maritime service, as this was defined by IMO [@cite:imo-msc-1-circ1610-rev1-2024].
+This document specifies the design of the "Provision of AtoN Information to End-Users" service according to the technical service specification [@cite:iala-aton_info_service_spec] using the IEC SECOM [@cite:iec-63173-2] standard as the transport mechanism for route exchange. This one of the core technical services included in the "MS-2 - Aids to Navigation" maritime service, as this was defined by IMO [@cite:imo-msc-1-circ1610-rev1-2024].
 
 This document was produced as part of the work of IALA ARM committee task group on development of technical service specifications for the provision of AtoN Information. The document is structured according to the IALA Guideline G1128 The Specification of e-Navigation Technical Services [@cite:iala-g1128] and is based on the SECOM template found therein [@cite:iala-g1128-annex-d]
 

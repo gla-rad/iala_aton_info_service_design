@@ -38,8 +38,8 @@ All unused interfaces of SECOM should be implemented to return HTTP 501 as speci
 There are three components that are of interest from the perspective of the service design:
 
 * The data provider's service has a SECOM-component which supports the SECOM REST APIs defined in the table above. All other components of the service are left to the decisions of the implementing party.
-* The data consumer client has a SECOM-component which will accepts the incoming connections from the service and store all messages until delivered to the vessel. This interface is typically on a shoreside server as it must be always available and at a static address.
-* The data consumer client also support a SECOM client which allows it to make direct SECOM calls to the service without having to proxy all calls via the SECOM-component on shore.
+* The data consumer client has a SECOM-component which will accept the incoming connections from the service and store all messages until delivered to the vessel. This interface is typically on a shoreside server as it must be always available and at a reachable address.
+* The data consumer client also supports a SECOM client which allows it to make direct SECOM calls to the service without having to proxy all calls via the SECOM-component on shore.
 
 In this service design we will not define the communication between the data provider and the AtoN information SECOM service or between the ship and the ship's shoreside SECOM-component. These are specific for each implementation and depend on the general system architecture and implementation decisions.
 

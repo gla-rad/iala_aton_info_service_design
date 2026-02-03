@@ -4,7 +4,7 @@
 
 This section provides a unique identification of the service and describes where the service is in the engineering lifecycle.
 
-<div id="html_table" caption="Technical Design Identification Information. {#tab:service_identification}">
+<div id="html_table" caption="Technical Design Identification Information.">
 <table>
 <tbody>
 <tr>

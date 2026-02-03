@@ -2,7 +2,7 @@
 
 # Acronyms
 
-<div id="html_table" caption="List of Acronyms. {#tab:acronyms}">
+<div id="html_table" caption="List of Acronyms.">
 <table>
 <thead>
 <tr>
