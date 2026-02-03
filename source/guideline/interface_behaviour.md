@@ -104,7 +104,7 @@ If no data is returned, the response is HTTP code 404.
 
 If the size of the data to be returned in more than the limit set by SECOM (i.e.  350 kbs), an HTTP 413 error code is expected from the data provider. In that case the data consumer should make use of the Get By Link operation, described in [@sec:interface_behaviour_operation_get_by_link].
 
-The **dataReference** is used when a known data object is retrieved. The dataReference is provided in the response from Get Summary and is typically an UUID.
+The **dataReference** is used when a known data object is retrieved. The `dataReference` is provided in the response from Get Summary and is typically an UUID.
 
 The **containterType** describes how the data is packaged, e.g. 0 for a S-100 DataSet, 1 for a S-100 Exchange-Set or 2 for no specific container, e.g. RTZ in XML.
 
@@ -114,14 +114,14 @@ The **productVersion** describes the specific version of the data product specif
 
 The **geometry** describes geographical criteria for the data requested. The geometry is given as a one-line WKT formatted string and can contain one or more geospatial objects. 
 
-The **unlocode** describes with 5 characters the UN code for city or other area, such as a port. The unlocode is a list administered by UN and can be found online. Many unlocodes have a position in longitude/latitude attached, but not all. In most cases the unlocode will be used as text only but this may depend on the service developer.
+The **unlocode** describes with 5 characters the UN code for city or other area, such as a port. The `unlocode` is a list administered by UN and can be found online. Many`unlocode`s have a position in longitude/latitude attached, but not all. In most cases the `unlocode` will be used as text only but this may depend on the service developer.
 
 The **validFrom**/**validTo** describes the requested validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ.
 
 
 ### Operation Get by Link {#sec:interface_behaviour_operation_get_by_link}
 
-The *Get by Link* operation is used by data consumers for retrieving large AtoN informatdatasets ion directly from a data provider. This interface shall be used instead of the Get, when the size of the data to be exchanged exceeds the SECOM limit (i.e. 350kbs). The consumer in this case cannot filter the pre-prepared results any further.
+The *Get by Link* operation is used by data consumers for retrieving large AtoN information datasets directly from a data provider. This interface shall be used instead of the Get, when the size of the data to be exchanged exceeds the SECOM limit (i.e. 350kbs). The consumer in this case cannot filter the pre-prepared results any further.
 
 The Get by Link operation interface must be implemented only by the data provider.
 
@@ -135,7 +135,7 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_get_by_link_func}
 
-The operation validates the given transactionIdentifier against the caller’s identity and the timeToLive given for the data. The data is then packaged according to agreement in Upload By Link and returned in the call.
+The operation validates the given `transactionIdentifier` against the caller’s identity and the timeToLive given for the data. The data is then packaged according to agreement in Upload By Link and returned in the call.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_get_by_link_params}
 
@@ -153,7 +153,7 @@ The operation validates the given transactionIdentifier against the caller’s i
 
 The unique **transactionIdentifier** given by the Upload By Link call.
 
-If the provided transactionIdentifier is not valid, the response is HTTP code 404.
+If the provided `transactionIdentifier` is not valid, the response is HTTP code 404.
 
 There is not specific time constraint for a data consumer to retrieve the results through the Get by Link operation. If however, the involved datasets have in the meantime been cancelled, the data provider is allowed to drop the pending transactions.
 
@@ -203,7 +203,7 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 
 #### Interpretation Guidelines {#sec:interface_behaviour_operation_get_summary_guide}
 
-In the response, the **dataReference** is given as a UUID for each data object listed. The dataReference can then be provided as input to a Get call.
+In the response, the **dataReference** is given as a UUID for each data object listed. The `dataReference` can then be provided as input to a Get call.
 
 The **dataProtection** flag indicates whether the data is encrypted or not. If encrypted, an encryptionKey is required to decrypt the data.
 
@@ -276,7 +276,7 @@ All criteria for the subscription are optional. If none are provided, all author
 
 #### Interpretation Guidelines {#sec:interface_behaviour_operation_subscription_guide}
 
-The **dataReference** criteria means that only new updates of the specific S-125 dataset will be sent in the subscription. If the dataReference dataset is cancelled or deleted, the subscription ends.
+The **dataReference** criteria means that only new updates of the specific S-125 dataset will be sent in the subscription. If the `dataReference` dataset is cancelled or deleted, the subscription ends.
 
 The **containterType** describes how the data is packaged, e.g. 0 for a S-100 DataSet, 1 for a S-100 Exchange-Set or 2 for no specific container, e.g. RTZ in XML.
 
@@ -284,7 +284,7 @@ The **dataProductType** and **productVersion** criteria means that only informat
 
 The **geometry** describes geographical criteria for the data requested. The geometry is given as a one-line WKT formatted string and can contain one or more geographical objects. 
 
-The **unlocode** criteria means that only information related to the unlocode will be sent in the subscription. If there is no unlocode related to the information provided by the service, the unlocode is ignored.
+The **unlocode** criteria means that only information related to the `unlocode` will be sent in the subscription. If there is no unlocode related to the information provided by the service, the `unlocode` is ignored.
 
 The **subscriptionPeriodStart** and **subscriptionPeriodEnd** criteria mean that data produced in the given time period will be sent in the subscription. When subscriptionPeriodEnd is reached, the subscription shall be removed automatically. The time period is recommended to be formatted in ISO 8601 UTC as yyyy-mm-dd hh:mm:ssZ.
 
@@ -382,7 +382,7 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_upload_func}
 
-In most cases this operation will take place as part of a subscription, originally initiated by the data consumer. In those cases the `<fromSubscription>` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
+In most cases this operation will take place as part of a subscription, originally initiated by the data consumer. In those cases the `fromSubscription` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
 
 This interface operation may on request consume the following provider interfaces:
 
@@ -437,15 +437,15 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_upload_by_link_func}
 
-In most cases the Upload by Link operation will take place as part of a subscription, initiated by the data consumer. It must be used instead of the Upload operation when the S-125 datasets to be transmitted exceed 350 kbs. In those cases, the `<fromSubscription>` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
+In most cases the Upload by Link operation will take place as part of a subscription, initiated by the data consumer. It must be used instead of the Upload operation when the S-125 datasets to be transmitted exceed 350 kbs. In those cases, the `fromSubscription` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
 
 This interface operation may on request consume the following provider interfaces:
 
 * Acknowledgement
 
-In an upload by link operation, an acknowledgement can be requested via the `<ackRequest>` parameter. The acknowledgment is expected to be received when the uploaded S-125 dataset has been delivered to the end‑system (technical acknowledgement), and/or (if supported) when the message has been opened/read by the end‑user (operational acknowledgement).
+In an upload by link operation, an acknowledgement can be requested via the `ackRequest` parameter. The acknowledgment is expected to be received when the uploaded S-125 dataset has been delivered to the end‑system (technical acknowledgement), and/or (if supported) when the message has been opened/read by the end‑user (operational acknowledgement).
 
-The data consumer may then use the URL available in the `<callbackEndpoint>` parameter to contact the data provider directly and get the advertised S-125 datasets, as well as send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the server URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the HTTPS request certificate provided during the TLS/SSL authentication step, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
+The data consumer may then use the URL available in the `callbackEndpoint` parameter to contact the data provider directly and get the advertised S-125 datasets, as well as send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the server URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the HTTPS request certificate provided during the TLS/SSL authentication step, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
 
 As in the Upload operation described previously, this operation supports multiple other parameters, which are presented in more detail in [@tbl:upload_by_link_operation_parameters]. To ensure the authenticity of the operation request, these parameters are included within a signed SECOM envelope structure.
 
@@ -493,7 +493,7 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_acknowledgment_func}
 
-The operation validates the given transactionIdentifier and handles the acknowledgement of sent data. The acknowledgement can be either for when the S-125 dataset has been delivered, opened or both. The acknowledgement contains a reference to the object delivered and has no time limit.
+The operation validates the given `transactionIdentifier` and handles the acknowledgement of sent data. The acknowledgement can be either for when the S-125 dataset has been delivered, opened or both. The acknowledgement contains a reference to the object delivered and has no time limit.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_acknowledgment_params}
 
