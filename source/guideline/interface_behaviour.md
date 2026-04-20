@@ -32,15 +32,15 @@ For SECOM v2.0 services only:
 
 ###	Error codes {#sec:interface_behaviour_common_error_codes}
 
-If incoming route does not pass business rule validation, the SECOM_ResponseCode must be 0.
+If the incoming AtoN dataset does not pass the business rule validation, the SECOM_ResponseCode must be 0.
 
 If the signature verification fails, the SECOM_ResponseCode must be 1.
 
-If certificate provided is invalid, the SECOM_ResponseCode must be 2.
+If the certificate provided is invalid, the SECOM_ResponseCode must be 2.
 
-If incoming route does not pass schema validation, the SECOM_ResponseCode must be 3.
+If the incoming AtoN dataset does not pass the schema validation, the SECOM_ResponseCode must be 3.
 
-In all of these cases, the response returned to the client must have the HTTP status 400.
+In all of these cases, the response returned to the consumer must have the HTTP status 400.
 
 ## Applicable SECOM Interfaces {#sec:interface_behaviour_applicable_interfaces}
 
