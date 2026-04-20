@@ -102,7 +102,7 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 
 If no data is returned, the response is HTTP code 404.
 
-If the size of the data to be returned in more than the limit set by SECOM (i.e.  350 kbs), an HTTP 413 error code is expected from the data provider. In that case the data consumer should make use of the Get By Link operation, described in [@sec:interface_behaviour_operation_get_by_link].
+If the size of the data to be returned in more than the limit set by SECOM (i.e. 350KB), an HTTP 413 error code is expected from the data provider. In that case the data consumer should make use of the Get By Link operation, described in [@sec:interface_behaviour_operation_get_by_link].
 
 The **dataReference** is used when a known data object is retrieved. The `dataReference` is provided in the response from Get Summary and is typically an UUID.
 
@@ -135,7 +135,7 @@ According to the SECOM specification, the interface definition is the following:
 
 #### Operation Functionality {#sec:interface_behaviour_operation_get_by_link_func}
 
-The operation validates the provided `<transactionIdentifier>` against the caller’s identity and the `timeToLive` given for the data. The data is then packaged according to the original Upload By Link request parameters and returned in the response.
+The operation validates the provided `<transactionIdentifier>` against the caller’s identity and the `<timeToLive>` (see section [@sec:interface_behaviour_operation_upload_by_link]) given for the data. The data is then packaged according to the original Upload By Link request parameters and returned in the response.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_get_by_link_params}
 
@@ -143,8 +143,8 @@ The operation validates the provided `<transactionIdentifier>` against the calle
 | --- | --- | ---  | --- |
 | transactionIdentifier | UUID | 1 | Identifier uploaded in Upload Link |
 | envelopeSignatureCertificate | String | 1..* | The public certificate(s) of the sender. Used to verify the envelope signature. |
-| envelopeRootCertificateThumbprint | String| 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format. |
-| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed. | 
+| envelopeRootCertificateThumbprint | String| 1 | Claimed thumbprint for the Signed Root Key (X.509 Certificate) in SHA256 and Base64 format. |
+| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope was signed. | 
 | SignatureReference | String | 1 | Specifies the algorithm used to compute digitalSignatureValue. For example "ECDSA-384-SHA2". |
 
 : The Get By Link Operation Parameters. {#tbl:get_by_link_operation_parameters}
@@ -368,7 +368,7 @@ The **eventEnum** describes the type of event, e.g. 1 when the subscription is c
 
 ### Operation Upload {#sec:interface_behaviour_operation_upload}
 
-The *Upload* operation enables data providers to upload (push) AtoN information to the data consumers. It allows consumers to receive S-125 datasets, while in a subscription or a due to a broadcast (not currently supported).
+The *Upload* operation enables data providers to upload (push) AtoN information to the data consumers. This allows consumers to receive S-125 datasets, while in a subscription or a due to a broadcast (not currently supported).
 
 The Upload operation interface must be implemented only by the data consumers.
 
@@ -382,7 +382,7 @@ According to the SECOM specification, the interface definition is the following:
 
 #### Operation Functionality {#sec:interface_behaviour_operation_upload_func}
 
-NOrmally this operation will take place as part of a subscription, originally initiated by the data consumer. In those cases the `<fromSubscription>` parameters is expected to be set to `true`. In future implementations however, there might be cases where urgent AtoN information will need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
+Normally this operation will take place as part of a subscription, originally initiated by the data consumer. In those cases the `<subscriptionIdentifier>` parameter is expected to be provided. In future implementations however, there might be cases where urgent AtoN information will need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
 
 This interface operation may on request consume the following provider interfaces:
 
@@ -390,7 +390,7 @@ This interface operation may on request consume the following provider interface
 
 In an upload operation, an acknowledgement can be requested via the `<ackRequest>` parameter. The acknowledgment is expected to be received when the uploaded S-125 dataset has been delivered to the end‑system (technical acknowledgement), and/or (if supported) when the message has been opened/read by the end‑user (operational acknowledgement).
 
-The data consumer may then use the URL available in the `<callbackEndpoint>` parameter to contact the data provider directly and send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the server URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the HTTPS request certificate provided during the TLS/SSL authentication step, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
+The data consumer may then use the URL available in the `<callbackEndpoint>` parameter to contact the data provider directly and send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the data provider URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the envelope certificate information, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
 
 The operation supports multiple other parameters, which are presented in more detail in [@tbl:upload_operation_parameters]. To ensure the authenticity of the operation request, these parameters are included within a signed SECOM envelope structure.
 
@@ -402,15 +402,14 @@ The operation supports multiple other parameters, which are presented in more de
 | containerType | Integer | 0..1 | Requested encoding of the data as described in [@cite:iec-63173-2]. If not provided, the service provider determines the standard encoding. |
 | dataProductType | String | 0..1 | Data product type as described in [@cite:iec-63173-2]. |
 | exchangeMetadata | SECOM_ExchangeMetadata as defined in [@cite:iec-63173-2] | 1 | The exchange metadata that contains information regarding the protection scheme, compression, signature and claimed identity. |
-| fromSubscription | Boolean | 1 | A flag that indicates whether the data has been uploaded within an active subscription or not. |
-| subscriptionIdentifier | UUID | 0..1 | Subscription identifier is specified if the object is uploaded within a subscription. |
-| ackRequest | AckRequestEnum as defined in [@cite:iec-63173-2] | 1 | Flag to indicate that acknowledgement is expected to be returned when the data is delivered to the end user, and/or when the content of the data is processed (opened) by the end user.|
-| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service. If not available, the baseUrl needs to be available through search service. |
-| transactionIdentifier | UUID | 1 | Unique transaction UUID to be used e.g. in acknowledgement. |
+| subscriptionIdentifier | UUID | 0..1 | A subscription identifier, specified if the object is uploaded within a subscription. |
+| ackRequest | AckRequestEnum as defined in [@cite:iec-63173-2] | 1 | Flag to indicate that an acknowledgement is expected to be returned when the data is delivered to the end user, and/or when the content of the data is processed (opened) by the end user. |
+| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service. If not available, the URL should be discovered through a search service. |
+| transactionIdentifier | UUID | 1 | Unique transaction UUID to be used e.g. in the acknowledgement. |
 | envelopeSignatureCertificate | String | 1..* | The public certificate(s) of the sender. Used to verify the envelope object signature. |
-| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format |
-| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed. |
-| envelopeSignatureReference | String | 1 | (S-100) Specifies the algorithm used to compute the envelopeSignature For example "ECDSA-384-SHA2". |
+| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for the Signed Root Key (X.509 Certificate) in SHA256 and Base64 format. |
+| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope was signed. |
+| envelopeSignatureReference | String | 1 | Specifies the algorithm used to compute the envelopeSignature. For example "ECDSA-384-SHA2". |
 
 : The Upload Operation Parameters. {#tbl:upload_operation_parameters}
 
@@ -418,7 +417,7 @@ The operation supports multiple other parameters, which are presented in more de
 
 If any of the upload request S-125 datasets is too large, the returned HTTP status code must be 413. The S-125 datasets must then be shared using the upload link interface.
 
-The data consumer may return HTTP status 403 if the uploaded AtoN information it receives that it has not requested. 
+The data consumer may return HTTP status 403 if the uploaded AtoN information it receives was not previously requested. 
 
 
 ### Operation Upload by Link {#sec:interface_behaviour_operation_upload_by_link}
@@ -437,7 +436,7 @@ According to the SECOM specification, the interface definition is the following:
 
 #### Operation Functionality {#sec:interface_behaviour_operation_upload_by_link_func}
 
-In most cases the Upload by Link operation will take place as part of a subscription, initiated by the data consumer. It must be used instead of the Upload operation when the S-125 datasets to be transmitted exceed 350 kbs. In those cases, the `<fromSubscription>` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
+In most cases the Upload by Link operation will take place as part of a subscription, initiated by the data consumer. It must be used instead of the Upload operation when the total size of the S-125 datasets to be transmitted exceed the predefined SECOM limit (i.e. 350KB). There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
 
 This interface operation may on request consume the following provider interfaces:
 
@@ -445,7 +444,7 @@ This interface operation may on request consume the following provider interface
 
 In an upload by link operation, an acknowledgement can be requested via the `<ackRequest>` parameter. The acknowledgment is expected to be received when the uploaded S-125 dataset has been delivered to the end‑system (technical acknowledgement), and/or (if supported) when the message has been opened/read by the end‑user (operational acknowledgement).
 
-The data consumer may then use the URL available in the `<callbackEndpoint>` parameter to contact the data provider directly and get the advertised S-125 datasets, as well as send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the server URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the HTTPS request certificate provided during the TLS/SSL authentication step, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
+The data consumer may then use the URL available in the `<callbackEndpoint>` parameter to contact the data provider directly and get the advertised S-125 datasets, as well as send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the data provider URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the envelope certificate information, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
 
 As in the Upload operation described previously, this operation supports multiple other parameters, which are presented in more detail in [@tbl:upload_by_link_operation_parameters]. To ensure the authenticity of the operation request, these parameters are included within a signed SECOM envelope structure.
 
@@ -456,17 +455,16 @@ As in the Upload operation described previously, this operation supports multipl
 | containerType | Integer | 0..1 | Requested encoding of the data as described in [@cite:iec-63173-2]. If not provided, the service provider determines the standard encoding. |
 | dataProductType | String | 0..1 | Data product type as described in [@cite:iec-63173-2]. |
 | exchangeMetadata | SECOM_ExchangeMetadata as defined in [@cite:iec-63173-2] | 1 | The exchange metadata that contains information regarding the protection scheme, compression, signature and claimed identity. |
-| fromSubscription | Boolean | 1 | A flag that indicates whether the data has been uploaded within an active subscription or not. |
-| subscriptionIdentifier | UUID | 0..1 | Subscription identifier is specified if the object is uploaded within a subscription. |
-| ackRequest | AckRequestEnum as defined in [@cite:iec-63173-2] | 1 | Flag to indicate that acknowledgement is expected to be returned when the data is delivered to the end user, and/or when the content of the data is processed (opened) by the end user.|
+| subscriptionIdentifier | UUID | 0..1 | A subscription identifier, specified if the object is uploaded within a subscription. |
+| ackRequest | AckRequestEnum as defined in [@cite:iec-63173-2] | 1 | Flag to indicate that an acknowledgement is expected to be returned when the data is delivered to the end user, and/or when the content of the data is processed (opened) by the end user. |
 | callbackEndpoint | URL | 0..1 | Base URL without trailing slash to the requestor SECOM service Endpoint where to send an acknowledgement. If not available, the endpoint needs to be available through the search service. |
-| transactionIdentifier | UUID | 1 | Unique transaction UUID to be used e.g. in acknowledgement. |
+| transactionIdentifier | UUID | 1 | Unique transaction UUID to be used e.g. in the acknowledgement. |
 | envelopeSignatureCertificate | String | 1..* | The public certificate(s) of the sender. Used to verify the envelope object signature. |
-| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format |
-| size |  Integer | 1 | Size of the data in kBytes to be downloaded. |
-| timeToLive | DateTime | 1 | Timestamp when data will be deleted on server. The data need to be fetched before this time. |
-| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed. |
-| envelopeSignatureReference | String | 1 | (S-100) Specifies the algorithm used to compute the envelopeSignature For example "ECDSA-384-SHA2" |
+| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for the Signed Root Key (X.509 Certificate) in SHA256 and Base64 format. |
+| size |  Integer | 1 | Size of the data in KB to be downloaded. |
+| timeToLive | DateTime | 1 | Timestamp of when the data will be deleted on the server. The data need to be fetched before this time. |
+| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope was signed. |
+| envelopeSignatureReference | String | 1 | Specifies the algorithm used to compute the envelopeSignature. For example "ECDSA-384-SHA2". |
 
 : The Upload Operation Parameters. {#tbl:upload_by_link_operation_parameters}
 
@@ -474,7 +472,7 @@ As in the Upload operation described previously, this operation supports multipl
 
 The Upload by Link operation should always be used when the server identifies that the size of the data to be transmitted exceed the predefined SECOM limit, or when the previously attempted upload operation failed with an HTTP 413 error code.
 
-The data consumer may return HTTP status 403 if the uploaded AtoN information it receives that it has not requested. 
+The data consumer may return HTTP status 403 if the uploaded AtoN information it receives was not previously requested. 
 
 
 ### Operation Acknowledgment {#sec:interface_behaviour_operation_acknowledgment}
@@ -493,20 +491,20 @@ According to the SECOM specification, the interface definition is the following:
 
 #### Operation Functionality {#sec:interface_behaviour_operation_acknowledgment_func}
 
-The operation validates the given `transactionIdentifier` and handles the acknowledgement of sent data. The acknowledgement can be either for when the S-125 dataset has been delivered, opened or both. The acknowledgement contains a reference to the object delivered and has no time limit.
+The operation validates the given `<transactionIdentifier>` and handles the acknowledgement of sent data. The acknowledgement can be either for when the S-125 dataset has been delivered, opened or both. The acknowledgement contains a reference to the object delivered and has no time limit.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_acknowledgment_params}
 
 | Parameters (in) | Encoding | Mult. | Descriptions |
 | --- | --- | ---  | --- |
 | createdAt | DateTime | 1 | Creation time for the acknowledgement. |
-| envelopeCertificate | String | 1..* | The public certificate of the sender. used to verify the envelope signature |
-| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format. |
-| transactionIdentifier | String | 1 |  Reference identifier given in upload. |
+| envelopeCertificate | String | 1..* | The public certificate of the sender, used to verify the envelope signature. |
+| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for the Signed Root Key (X.509 Certificate) in SHA256 and Base64 format. |
+| transactionIdentifier | String | 1 |  Reference identifier provided during the upload. |
 | ackType | AckTypeEnumType as defined in [@cite:iec-63173-2] | 1 | Type of of acknowledgement. |
 | nackType | NackTypeEnum as defined in [@cite:iec-63173-2] | 0..1 | NackTypeEnum Information details if error. |
-| envelopeSignatureTime | DateTime | 0..1 | Timestamp when the envelope is signed |
-| envelopeSignatureReference | String | 1 | Specifies the algorithm used to compute envelope signature. For example "ECDSA-384-SHA2" |
+| envelopeSignatureTime | DateTime | 0..1 | Timestamp when the envelope was signed. |
+| envelopeSignatureReference | String | 1 | Specifies the algorithm used to compute envelope signature. For example "ECDSA-384-SHA2". |
 
 : The Acknowledgment Operation Parameters. {#tbl:acknowledgment_operation_parameters}
 
@@ -514,7 +512,7 @@ The operation validates the given `transactionIdentifier` and handles the acknow
 
 The **transactionIdentifier** describes the reference to what sending transaction of data that is acknowledged.
 
-The response can be either positive acknowledgement (ackType = 1 or 2) or negative acknowledgement (ackType = 3 (error)). If negative acknowledgement is given, the error message is expected to be provided in nackType (0-4) describing the error.
+The response can be either positive acknowledgement (ackType = 1 or 2) or negative acknowledgement (ackType = 3 (error)). If a negative acknowledgement is given, the error message is expected to be provided in nackType (0-4) describing the error.
 
 
 
