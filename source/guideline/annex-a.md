@@ -6,8 +6,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "AtoN Service - SECOM v1.0 Interfaces",
-    "description": "The SECOM interfaces of the AtoN Service",
+    "title": "AtoN Service - SECOM v2.0 Interfaces",
+    "description": "The SECOM V2 interfaces of the AtoN Service",
     "termsOfService": "https://gla-rad.org/",
     "contact": {
       "email": "Nikolaos.Vastardis@gla-rad.org"
@@ -34,7 +34,7 @@
     }
   ],
   "paths": {
-    "/v1/acknowledgement": {
+    "/v2/acknowledgement": {
       "post": {
         "tags": [
           "SECOM"
@@ -67,7 +67,7 @@
         }
       }
     },
-    "/v1/capability": {
+    "/v2/capability": {
       "get": {
         "tags": [
           "SECOM"
@@ -89,7 +89,7 @@
         }
       }
     },
-    "/v1/object": {
+    "/v2/object": {
       "get": {
         "tags": [
           "SECOM"
@@ -100,8 +100,8 @@
             "name": "dataReference",
             "in": "query",
             "schema": {
+              "pattern": "^[{(]?[0-9a-fA-F]{8}[-]?[0-9a-fA-F]{4}[-]?[0-9a-fA-F]{4}[-]?[0-9a-fA-F]{4}[-]?[0-9a-fA-F]{12}[)}]?$",
               "type": "string",
-              "format": "uuid",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -113,6 +113,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "Data Type requested",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -129,37 +130,38 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "Data product type name See: https://registry.iho.int/productspec/list.do (column 'Product ID')",
               "exampleSetFlag": false,
               "types": [
                 "string"
               ],
               "enum": [
                 "OTHER",
-                "S57",
-                "S101",
-                "S102",
-                "S104",
-                "S111",
-                "S122",
-                "S123",
-                "S124",
-                "S125",
-                "S126",
-                "S127",
-                "S128",
-                "S129",
-                "S131",
-                "S201",
-                "S210",
-                "S211",
-                "S212",
-                "S401",
-                "S402",
-                "S411",
-                "S412",
-                "S413",
-                "S414",
-                "S421",
+                "S-57",
+                "S-101",
+                "S-102",
+                "S-104",
+                "S-111",
+                "S-122",
+                "S-123",
+                "S-124",
+                "S-125",
+                "S-126",
+                "S-127",
+                "S-128",
+                "S-129",
+                "S-131",
+                "S-201",
+                "S-210",
+                "S-211",
+                "S-212",
+                "S-401",
+                "S-402",
+                "S-411",
+                "S-412",
+                "S-413",
+                "S-414",
+                "S-421",
                 "RTZ",
                 "EPC"
               ]
@@ -170,6 +172,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "S-100 based Product specification version",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -181,6 +184,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "Geometry condition for geo-located information objects as WKT LineString or Polygon",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -191,8 +195,9 @@
             "name": "unlocode",
             "in": "query",
             "schema": {
-              "pattern": "[A-Z]{5}",
+              "pattern": "^[a-zA-Z]{2}[a-zA-Z2-9]{3}",
               "type": "string",
+              "description": "See UN web page",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -203,27 +208,25 @@
             "name": "validFrom",
             "in": "query",
             "schema": {
-              "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
               "type": "string",
+              "description": "Time related to validity period start for information object",
               "exampleSetFlag": false,
               "types": [
                 "string"
               ]
-            },
-            "example": "20200101T123000"
+            }
           },
           {
             "name": "validTo",
             "in": "query",
             "schema": {
-              "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
               "type": "string",
+              "description": "Time related to validity period end for information object",
               "exampleSetFlag": false,
               "types": [
                 "string"
               ]
-            },
-            "example": "20200101T123000"
+            }
           },
           {
             "name": "page",
@@ -231,11 +234,13 @@
             "schema": {
               "minimum": 1,
               "type": "integer",
+              "description": "Requested pagination page. Must be a positive integer >= 1..",
               "format": "int32",
               "exampleSetFlag": false,
               "types": [
                 "integer"
-              ]
+              ],
+              "default": 1
             }
           },
           {
@@ -244,11 +249,13 @@
             "schema": {
               "minimum": 0,
               "type": "integer",
+              "description": "Requested pagination page size. Must be a positive integer >= 0.",
               "format": "int32",
               "exampleSetFlag": false,
               "types": [
                 "integer"
-              ]
+              ],
+              "default": 100
             }
           }
         ],
@@ -268,7 +275,7 @@
         }
       }
     },
-    "/v1/object/summary": {
+    "/v2/object/summary": {
       "get": {
         "tags": [
           "SECOM"
@@ -280,6 +287,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "Data Type requested",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -296,37 +304,38 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "Data product type name See: https://registry.iho.int/productspec/list.do (column 'Product ID')",
               "exampleSetFlag": false,
               "types": [
                 "string"
               ],
               "enum": [
                 "OTHER",
-                "S57",
-                "S101",
-                "S102",
-                "S104",
-                "S111",
-                "S122",
-                "S123",
-                "S124",
-                "S125",
-                "S126",
-                "S127",
-                "S128",
-                "S129",
-                "S131",
-                "S201",
-                "S210",
-                "S211",
-                "S212",
-                "S401",
-                "S402",
-                "S411",
-                "S412",
-                "S413",
-                "S414",
-                "S421",
+                "S-57",
+                "S-101",
+                "S-102",
+                "S-104",
+                "S-111",
+                "S-122",
+                "S-123",
+                "S-124",
+                "S-125",
+                "S-126",
+                "S-127",
+                "S-128",
+                "S-129",
+                "S-131",
+                "S-201",
+                "S-210",
+                "S-211",
+                "S-212",
+                "S-401",
+                "S-402",
+                "S-411",
+                "S-412",
+                "S-413",
+                "S-414",
+                "S-421",
                 "RTZ",
                 "EPC"
               ]
@@ -337,6 +346,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "S-100 based Product specification version",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -348,6 +358,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "description": "Geometry condition for geo-located information objects as WKT LineString or Polygon",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -358,8 +369,9 @@
             "name": "unlocode",
             "in": "query",
             "schema": {
-              "pattern": "[A-Z]{5}",
+              "pattern": "^[a-zA-Z]{2}[a-zA-Z2-9]{3}",
               "type": "string",
+              "description": "See UN web page",
               "exampleSetFlag": false,
               "types": [
                 "string"
@@ -370,27 +382,25 @@
             "name": "validFrom",
             "in": "query",
             "schema": {
-              "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
               "type": "string",
+              "description": "Time related to validity period start for information object",
               "exampleSetFlag": false,
               "types": [
                 "string"
               ]
-            },
-            "example": "20200101T123000"
+            }
           },
           {
             "name": "validTo",
             "in": "query",
             "schema": {
-              "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
               "type": "string",
+              "description": "Time related to validity period end for information object",
               "exampleSetFlag": false,
               "types": [
                 "string"
               ]
-            },
-            "example": "20200101T123000"
+            }
           },
           {
             "name": "page",
@@ -398,11 +408,13 @@
             "schema": {
               "minimum": 1,
               "type": "integer",
+              "description": "Requested pagination page. Must be a positive integer >= 1..",
               "format": "int32",
               "exampleSetFlag": false,
               "types": [
                 "integer"
-              ]
+              ],
+              "default": 1
             }
           },
           {
@@ -411,11 +423,13 @@
             "schema": {
               "minimum": 0,
               "type": "integer",
+              "description": "Requested pagination page size. Must be a positive integer >= 0.",
               "format": "int32",
               "exampleSetFlag": false,
               "types": [
                 "integer"
-              ]
+              ],
+              "default": 100
             }
           }
         ],
@@ -435,7 +449,7 @@
         }
       }
     },
-    "/v1/ping": {
+    "/v2/ping": {
       "get": {
         "tags": [
           "SECOM"
@@ -457,7 +471,7 @@
         }
       }
     },
-    "/v1/subscription": {
+    "/v2/subscription": {
       "post": {
         "tags": [
           "SECOM"
@@ -494,17 +508,20 @@
           "SECOM"
         ],
         "operationId": "removeSubscription",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RemoveSubscriptionObject",
-                "exampleSetFlag": false
-              },
-              "exampleSetFlag": false
+        "parameters": [
+          {
+            "name": "subscriptionIdentifier",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "exampleSetFlag": false,
+              "types": [
+                "string"
+              ]
             }
           }
-        },
+        ],
         "responses": {
           "default": {
             "description": "default response",
@@ -524,7 +541,7 @@
   },
   "components": {
     "schemas": {
-      "secom-v1": {
+      "secom-v2": {
         "type": "object",
         "exampleSetFlag": false,
         "types": [
@@ -578,6 +595,7 @@
         "required": [
           "ackType",
           "createdAt",
+          "digitalSignatureReference",
           "envelopeCertificate",
           "envelopeRootCertificateThumbprint",
           "envelopeSignatureTime",
@@ -586,27 +604,42 @@
         "type": "object",
         "properties": {
           "envelopeRootCertificateThumbprint": {
+            "maxLength": 2147483647,
+            "minLength": 1,
+            "pattern": "^[A-Fa-f0-9]{40,64}$",
             "type": "string",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ]
-          },
-          "envelopeSignatureTime": {
-            "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
-            "type": "string",
-            "description": "The envelope signature date-time",
-            "example": "19850412T101530",
+            "description": "Claimed Thumbprint for Signed Root Key (X.509 Certificate) Format: SHA-1 or SHA-256 thumbprint.",
+            "example": "AB12CD34EF56AB78CD90EF12AB34CD56EF78AB90",
             "exampleSetFlag": true,
             "types": [
               "string"
             ]
           },
+          "envelopeSignatureTime": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?",
+            "type": "string",
+            "description": "Time when encryptionKey envelope is signed Must be in UTC format: yyyy-MM-ddTHH:mm:ssZ.",
+            "example": "1985-04-12T10:15:30Z",
+            "exampleSetFlag": true,
+            "types": [
+              "string"
+            ]
+          },
+          "digitalSignatureReference": {
+            "maxLength": 2147483647,
+            "minLength": 1,
+            "type": "string",
+            "description": "(S-100) Specifies the algorithm used to compute envelopeSignature\\r\\nFor example \\\"ECDSA-384-SHA2\\\"",
+            "exampleSetFlag": false,
+            "types": [
+              "string"
+            ]
+          },
           "createdAt": {
-            "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?",
             "type": "string",
             "description": "The creation date-time",
-            "example": "19850412T101530",
+            "example": "1985-04-12T10:15:30Z",
             "exampleSetFlag": true,
             "types": [
               "string"
@@ -636,11 +669,28 @@
               "integer"
             ]
           },
-          "envelopeCertificate": {
+          "dataReference": {
             "type": "string",
+            "format": "uuid",
             "exampleSetFlag": false,
             "types": [
               "string"
+            ]
+          },
+          "envelopeCertificate": {
+            "type": "array",
+            "description": "The public certificate (chain) of the sender, used to verify the EnvelopeKeyObject signature",
+            "exampleSetFlag": false,
+            "items": {
+              "type": "string",
+              "description": "The public certificate (chain) of the sender, used to verify the EnvelopeKeyObject signature",
+              "exampleSetFlag": false,
+              "types": [
+                "string"
+              ]
+            },
+            "types": [
+              "array"
             ]
           }
         },
@@ -672,31 +722,31 @@
             ],
             "enum": [
               "OTHER",
-              "S57",
-              "S101",
-              "S102",
-              "S104",
-              "S111",
-              "S122",
-              "S123",
-              "S124",
-              "S125",
-              "S126",
-              "S127",
-              "S128",
-              "S129",
-              "S131",
-              "S201",
-              "S210",
-              "S211",
-              "S212",
-              "S401",
-              "S402",
-              "S411",
-              "S412",
-              "S413",
-              "S414",
-              "S421",
+              "S-57",
+              "S-101",
+              "S-102",
+              "S-104",
+              "S-111",
+              "S-122",
+              "S-123",
+              "S-124",
+              "S-125",
+              "S-126",
+              "S-127",
+              "S-128",
+              "S-129",
+              "S-131",
+              "S-201",
+              "S-210",
+              "S-211",
+              "S-212",
+              "S-401",
+              "S-402",
+              "S-411",
+              "S-412",
+              "S-413",
+              "S-414",
+              "S-421",
               "RTZ",
               "EPC"
             ]
@@ -714,6 +764,8 @@
             "exampleSetFlag": false
           },
           "serviceVersion": {
+            "maxLength": 2147483647,
+            "minLength": 1,
             "type": "string",
             "exampleSetFlag": false,
             "types": [
@@ -747,6 +799,7 @@
           "get",
           "getByLink",
           "getSummary",
+          "publicKey",
           "subscription",
           "upload",
           "uploadLink"
@@ -808,6 +861,13 @@
             "types": [
               "boolean"
             ]
+          },
+          "publicKey": {
+            "type": "boolean",
+            "exampleSetFlag": false,
+            "types": [
+              "boolean"
+            ]
           }
         },
         "exampleSetFlag": false
@@ -829,7 +889,7 @@
             ]
           },
           "exchangeMetadata": {
-            "$ref": "#/components/schemas/SECOM_ExchangeMetadataObject",
+            "$ref": "#/components/schemas/ExchangeMetadata",
             "exampleSetFlag": false
           },
           "ackRequest": {
@@ -843,7 +903,7 @@
         },
         "exampleSetFlag": false
       },
-      "DigitalSignatureValue": {
+      "DigitalSignatureValueObject": {
         "required": [
           "digitalSignature",
           "publicCertificate"
@@ -851,25 +911,96 @@
         "type": "object",
         "properties": {
           "publicRootCertificateThumbprint": {
+            "pattern": "^[A-Fa-f0-9]{40,64}$",
             "type": "string",
-            "exampleSetFlag": false,
+            "description": "Claimed Thumbprint for Signed Root Key (X.509 Certificate) Format: SHA-1 or SHA-256 thumbprint.",
+            "example": "AB12CD34EF56AB78CD90EF12AB34CD56EF78AB90",
+            "exampleSetFlag": true,
             "types": [
               "string"
             ]
           },
           "publicCertificate": {
+            "type": "array",
+            "description": "(S100) Public Key (chain) for claimed identity",
+            "exampleSetFlag": false,
+            "items": {
+              "type": "string",
+              "description": "(S100) Public Key (chain) for claimed identity",
+              "exampleSetFlag": false,
+              "types": [
+                "string"
+              ]
+            },
+            "types": [
+              "array"
+            ]
+          },
+          "digitalSignature": {
+            "maxLength": 2147483647,
+            "minLength": 1,
             "type": "string",
+            "description": "(S100) The digital signature in HEX format as one row, no trailing return/new line",
+            "exampleSetFlag": false,
+            "types": [
+              "string"
+            ]
+          }
+        },
+        "exampleSetFlag": false
+      },
+      "ExchangeMetadata": {
+        "required": [
+          "compressionFlag",
+          "dataProtection",
+          "digitalSignatureReference",
+          "protectionScheme"
+        ],
+        "type": "object",
+        "properties": {
+          "dataProtection": {
+            "type": "boolean",
+            "description": "(S-100) Indicates if the data is encrypted. \\r\\n0 indicates unencrypted data\\r\\n1 indicates encrypted data",
+            "exampleSetFlag": false,
+            "types": [
+              "boolean"
+            ]
+          },
+          "protectionScheme": {
+            "type": "string",
+            "description": "S-100) Specification or method used for data protection Such as S-63, SECOM",
             "exampleSetFlag": false,
             "types": [
               "string"
             ]
           },
-          "digitalSignature": {
+          "digitalSignatureReference": {
             "type": "string",
+            "description": "(S-100) Specifies the algorithm used to compute digitalSignatureValue\\r\\nFor example \\\"ECDSA-384-SHA2\\\"",
             "exampleSetFlag": false,
             "types": [
               "string"
+            ],
+            "enum": [
+              "dsa",
+              "ecdsa-256-sha2-256",
+              "ecdsa-256-sha3-256",
+              "ecdsa-384-sha2",
+              "ecdsa-384-sha3",
+              "cvc_ecdsa"
             ]
+          },
+          "compressionFlag": {
+            "type": "boolean",
+            "description": "(S-100) Indicates if data is compressed.\\r\\n0 indicates uncompressed\\r\\n1 indicates compressed",
+            "exampleSetFlag": false,
+            "types": [
+              "boolean"
+            ]
+          },
+          "digitalSignatureValue": {
+            "$ref": "#/components/schemas/DigitalSignatureValueObject",
+            "exampleSetFlag": false
           }
         },
         "exampleSetFlag": false
@@ -894,13 +1025,6 @@
           "pagination": {
             "$ref": "#/components/schemas/PaginationObject",
             "exampleSetFlag": false
-          },
-          "responseText": {
-            "type": "string",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ]
           }
         },
         "exampleSetFlag": false
@@ -913,72 +1037,25 @@
         "type": "object",
         "properties": {
           "totalItems": {
+            "minimum": 0,
             "type": "integer",
+            "description": "The total number of items that satisfy the query. This is always returned unless the requested page is set to 0.",
             "format": "int32",
-            "exampleSetFlag": false,
+            "example": 0,
+            "exampleSetFlag": true,
             "types": [
               "integer"
             ]
           },
           "maxItemsPerPage": {
+            "minimum": 0,
             "type": "integer",
+            "description": "The maximum number of items the service shall return per page.",
             "format": "int32",
-            "exampleSetFlag": false,
+            "example": 0,
+            "exampleSetFlag": true,
             "types": [
               "integer"
-            ]
-          }
-        },
-        "exampleSetFlag": false
-      },
-      "SECOM_ExchangeMetadataObject": {
-        "required": [
-          "compressionFlag",
-          "dataProtection",
-          "digitalSignatureReference",
-          "digitalSignatureValue",
-          "protectionScheme"
-        ],
-        "type": "object",
-        "properties": {
-          "dataProtection": {
-            "type": "boolean",
-            "exampleSetFlag": false,
-            "types": [
-              "boolean"
-            ]
-          },
-          "protectionScheme": {
-            "type": "string",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ]
-          },
-          "digitalSignatureReference": {
-            "type": "string",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ],
-            "enum": [
-              "dsa",
-              "ecdsa-256-sha2-256",
-              "ecdsa-256-sha3-256",
-              "ecdsa-384-sha2",
-              "ecdsa-384-sha3",
-              "cvc_ecdsa"
-            ]
-          },
-          "digitalSignatureValue": {
-            "$ref": "#/components/schemas/DigitalSignatureValue",
-            "exampleSetFlag": false
-          },
-          "compressionFlag": {
-            "type": "boolean",
-            "exampleSetFlag": false,
-            "types": [
-              "boolean"
             ]
           }
         },
@@ -990,8 +1067,9 @@
         ],
         "type": "object",
         "properties": {
-          "summaryObject": {
+          "informationSummaryObject": {
             "type": "array",
+            "description": "Description of the information object",
             "exampleSetFlag": false,
             "items": {
               "$ref": "#/components/schemas/SummaryObject",
@@ -1004,29 +1082,22 @@
           "pagination": {
             "$ref": "#/components/schemas/PaginationObject",
             "exampleSetFlag": false
-          },
-          "responseText": {
-            "type": "string",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ]
           }
         },
         "exampleSetFlag": false
       },
       "SummaryObject": {
         "required": [
-          "containerType",
           "dataCompression",
-          "dataProductType",
           "dataProtection",
-          "dataReference"
+          "dataReference",
+          "info_description"
         ],
         "type": "object",
         "properties": {
           "dataReference": {
             "type": "string",
+            "description": "Reference to data",
             "format": "uuid",
             "exampleSetFlag": false,
             "types": [
@@ -1035,6 +1106,7 @@
           },
           "dataProtection": {
             "type": "boolean",
+            "description": "Flag indicating if data is encrypted or not",
             "exampleSetFlag": false,
             "types": [
               "boolean"
@@ -1042,6 +1114,7 @@
           },
           "dataCompression": {
             "type": "boolean",
+            "description": "Flag indicating if data is compressed or not",
             "exampleSetFlag": false,
             "types": [
               "boolean"
@@ -1057,43 +1130,45 @@
           },
           "dataProductType": {
             "type": "string",
+            "description": "Data product type name requested, e.g. S-124, S-421",
             "exampleSetFlag": false,
             "types": [
               "string"
             ],
             "enum": [
               "OTHER",
-              "S57",
-              "S101",
-              "S102",
-              "S104",
-              "S111",
-              "S122",
-              "S123",
-              "S124",
-              "S125",
-              "S126",
-              "S127",
-              "S128",
-              "S129",
-              "S131",
-              "S201",
-              "S210",
-              "S211",
-              "S212",
-              "S401",
-              "S402",
-              "S411",
-              "S412",
-              "S413",
-              "S414",
-              "S421",
+              "S-57",
+              "S-101",
+              "S-102",
+              "S-104",
+              "S-111",
+              "S-122",
+              "S-123",
+              "S-124",
+              "S-125",
+              "S-126",
+              "S-127",
+              "S-128",
+              "S-129",
+              "S-131",
+              "S-201",
+              "S-210",
+              "S-211",
+              "S-212",
+              "S-401",
+              "S-402",
+              "S-411",
+              "S-412",
+              "S-413",
+              "S-414",
+              "S-421",
               "RTZ",
               "EPC"
             ]
           },
           "info_identifier": {
             "type": "string",
+            "description": "Identifier of the information object",
             "exampleSetFlag": false,
             "types": [
               "string"
@@ -1101,6 +1176,7 @@
           },
           "info_name": {
             "type": "string",
+            "description": "Name of the information object",
             "exampleSetFlag": false,
             "types": [
               "string"
@@ -1108,6 +1184,7 @@
           },
           "info_status": {
             "type": "string",
+            "description": "Status of the information object",
             "exampleSetFlag": false,
             "types": [
               "string"
@@ -1115,16 +1192,17 @@
           },
           "info_description": {
             "type": "string",
+            "description": "Description of the information object\"",
             "exampleSetFlag": false,
             "types": [
               "string"
             ]
           },
           "info_lastModifiedDate": {
-            "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?",
             "type": "string",
-            "description": "The last modified date-time",
-            "example": "19850412T101530",
+            "description": "Date for last modified Must be in UTC format: yyyy-MM-ddTHH:mm:ssZ.",
+            "example": "1985-04-12T10:15:30Z",
             "exampleSetFlag": true,
             "types": [
               "string"
@@ -1132,6 +1210,7 @@
           },
           "info_productVersion": {
             "type": "string",
+            "description": "S-100 based Product version e.g. 1.0.0",
             "exampleSetFlag": false,
             "types": [
               "string"
@@ -1139,23 +1218,25 @@
           },
           "info_size": {
             "type": "integer",
-            "format": "int64",
+            "description": "Size of the data",
+            "format": "int32",
             "exampleSetFlag": false,
             "types": [
               "integer"
             ]
           }
         },
+        "description": "Description of the information object",
         "exampleSetFlag": false
       },
       "PingResponseObject": {
         "type": "object",
         "properties": {
           "lastPrivateInteractionTime": {
-            "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?",
             "type": "string",
             "description": "The last private interaction date-time",
-            "example": "19850412T101530",
+            "example": "1985-04-12T10:15:30Z",
             "exampleSetFlag": true,
             "types": [
               "string"
@@ -1177,45 +1258,28 @@
         },
         "exampleSetFlag": false
       },
-      "RemoveSubscriptionObject": {
-        "required": [
-          "subscriptionIdentifier"
-        ],
-        "type": "object",
-        "properties": {
-          "subscriptionIdentifier": {
-            "type": "string",
-            "format": "uuid",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ]
-          }
-        },
-        "exampleSetFlag": false
-      },
       "SubscriptionResponseObject": {
         "type": "object",
         "properties": {
-          "subscriptionIdentifier": {
-            "type": "string",
-            "format": "uuid",
-            "exampleSetFlag": false,
-            "types": [
-              "string"
-            ]
-          },
           "message": {
             "type": "string",
             "exampleSetFlag": false,
             "types": [
               "string"
             ]
+          },
+          "subscriptionIdentifier": {
+            "type": "string",
+            "format": "uuid",
+            "exampleSetFlag": false,
+            "types": [
+              "string"
+            ]
           }
         },
         "exampleSetFlag": false
       },
-      "SubscriptionRequestObject": {
+      "EnvelopeSubscriptionObject": {
         "type": "object",
         "properties": {
           "containerType": {
@@ -1228,43 +1292,45 @@
           },
           "dataProductType": {
             "type": "string",
+            "description": "Data product type name requested, e.g. S-124, S-421",
             "exampleSetFlag": false,
             "types": [
               "string"
             ],
             "enum": [
               "OTHER",
-              "S57",
-              "S101",
-              "S102",
-              "S104",
-              "S111",
-              "S122",
-              "S123",
-              "S124",
-              "S125",
-              "S126",
-              "S127",
-              "S128",
-              "S129",
-              "S131",
-              "S201",
-              "S210",
-              "S211",
-              "S212",
-              "S401",
-              "S402",
-              "S411",
-              "S412",
-              "S413",
-              "S414",
-              "S421",
+              "S-57",
+              "S-101",
+              "S-102",
+              "S-104",
+              "S-111",
+              "S-122",
+              "S-123",
+              "S-124",
+              "S-125",
+              "S-126",
+              "S-127",
+              "S-128",
+              "S-129",
+              "S-131",
+              "S-201",
+              "S-210",
+              "S-211",
+              "S-212",
+              "S-401",
+              "S-402",
+              "S-411",
+              "S-412",
+              "S-413",
+              "S-414",
+              "S-421",
               "RTZ",
               "EPC"
             ]
           },
           "dataReference": {
             "type": "string",
+            "description": "Reference to data",
             "format": "uuid",
             "exampleSetFlag": false,
             "types": [
@@ -1273,6 +1339,7 @@
           },
           "productVersion": {
             "type": "string",
+            "description": "S-100 based Product type version requested, e.g. 1.0.0",
             "exampleSetFlag": false,
             "types": [
               "string"
@@ -1281,7 +1348,7 @@
           "geometry": {
             "pattern": "^([A-Z]+\\s*\\(\\(?\\s*(-?\\d+(\\.\\d+)?)\\s+-?\\d+(\\.\\d+)?(?:\\s+-?\\d+(\\.\\d+)?)?\\s*(,\\s*(-?\\d+(\\.\\d+)?)\\s+-?\\d+(\\.\\d+)?(?:\\s+-?\\d+(\\.\\d+)?)?\\s*)*\\)\\)?\\s*)+$",
             "type": "string",
-            "description": "The subscription geometry",
+            "description": "Geometry condition for geolocated information objects",
             "example": "POLYGON ((0.65 51.42, 0.65 52.26, 2.68 52.26, 2.68 51.42, 0.65 51.42))",
             "exampleSetFlag": true,
             "types": [
@@ -1291,7 +1358,7 @@
           "unlocode": {
             "pattern": "[A-Z]{5}",
             "type": "string",
-            "description": "The subscription area as UNLOCODE",
+            "description": "Code of defined object",
             "example": "GBHRW",
             "exampleSetFlag": true,
             "types": [
@@ -1299,21 +1366,66 @@
             ]
           },
           "subscriptionPeriodStart": {
-            "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?",
             "type": "string",
-            "description": "The subscription period start",
-            "example": "19850412T101530",
+            "description": "Start time of subscription Must be in UTC format: yyyy-MM-ddTHH:mm:ssZ.",
+            "format": "date-time",
+            "example": "1985-04-12T10:15:30Z",
             "exampleSetFlag": true,
             "types": [
               "string"
             ]
           },
           "subscriptionPeriodEnd": {
-            "pattern": "(\\d{8})T(\\d{6})(Z|\\+\\d{4})?",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?",
             "type": "string",
-            "description": "The subscription period end",
-            "example": "19850412T101530",
+            "description": "End time of subscription Must be in UTC format: yyyy-MM-ddTHH:mm:ssZ.",
+            "format": "date-time",
+            "example": "1985-04-12T10:15:30Z",
             "exampleSetFlag": true,
+            "types": [
+              "string"
+            ]
+          },
+          "callbackEndpoint": {
+            "pattern": "^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$",
+            "type": "string",
+            "description": "URL to the requestor\r\nEndpoint where to send an acknowledgement.\r\nIf not availalble, the endpoint where to send an acknowledgement need to be available in service registry lookup.",
+            "format": "uri",
+            "example": "https://example.com",
+            "exampleSetFlag": true,
+            "types": [
+              "string"
+            ]
+          },
+          "pushAll": {
+            "type": "boolean",
+            "description": "Flag for sending an initial set of data within requested subscription and then start the subscription.\r\nIf false, only data updates from the start of the subscription will be sent.",
+            "exampleSetFlag": false,
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "exampleSetFlag": false
+      },
+      "SubscriptionRequestObject": {
+        "required": [
+          "envelope",
+          "envelopeSignature"
+        ],
+        "type": "object",
+        "properties": {
+          "envelope": {
+            "$ref": "#/components/schemas/EnvelopeSubscriptionObject",
+            "exampleSetFlag": false
+          },
+          "envelopeSignature": {
+            "maxLength": 2147483647,
+            "minLength": 1,
+            "type": "string",
+            "description": "The signature ot the EnvelopeObject in HEX format without whitespace or linebreaks",
+            "exampleSetFlag": false,
             "types": [
               "string"
             ]
