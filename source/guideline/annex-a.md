@@ -8,9 +8,9 @@
   "info": {
     "title": "AtoN Service - SECOM v2.0 Interfaces",
     "description": "The SECOM V2 interfaces of the AtoN Service",
-    "termsOfService": "https://gla-rad.org/",
+    "termsOfService": "https://www.iala.int/,
     "contact": {
-      "email": "Nikolaos.Vastardis@gla-rad.org"
+      "email": "email@iala.int"
     },
     "license": {
       "name": "Apache 2.0",
