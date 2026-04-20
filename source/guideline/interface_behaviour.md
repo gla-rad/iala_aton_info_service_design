@@ -74,7 +74,7 @@ All instances of this service design must provide access to all S-125 datasets m
 
 The operation supports multiple filter parameters, presented in more detail in [@tbl:get_operation_parameters]. To ensure the authenticity of the operation request, the filter parameters are included within a signed SECOM envelope structure. Data provider instances are required to support all referenced filter parameters.
 
-If multiple filter parameters are provided, only results that match all requested filters, combined with logical AND, must be returned. If no parameters are given, the response is either an empty list or all available datasets for  which has been given access to by the data provider. A data provider must offer the appropriate encoding of AtoN information in accordance with the S-125 standard.
+If multiple filter parameters are provided, only results that match all requested filters, combined with logical AND, must be returned. If no parameters are given, the response is either an empty list or a list of all valid datasets currently made available by the data provider. A data provider must offer the appropriate encoding of AtoN information in accordance with the S-125 standard.
 
 Depending on the combination of the  **containterType** and **validFrom**/**validTo** input parameter values, the service must respond differently:
 
@@ -178,7 +178,7 @@ All instances of this service design must provide access to the summary informat
 
 The operation supports multiple filter parameters, presented in more detail in [@tbl:get_summary_operation_parameters]. To ensure the authenticity of the operation request, the filter parameters are included within a signed SECOM envelope structure. Data provider instances are required to support all referenced filter parameters.
 
-If multiple query parameters are provided, only results that match all requested filters, combined with logical AND, must be returned. If no parameters are given, the response is either an empty list or all available dataset summaries the consumer has been given access to by the service provider.
+If multiple query parameters are provided, only results that match all requested filters, combined with logical AND, must be returned. If no parameters are given, the response is either an empty list or a summary list of all valid datasets currently made available by the service provider.
 
 Depending on the combination of the  **containterType** and **validFrom**/**validTo** input parameter values, the data provider must respond differently:
 
