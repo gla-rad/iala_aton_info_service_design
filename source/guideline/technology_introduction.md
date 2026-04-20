@@ -43,15 +43,13 @@ The data is mandatory to be signed by the sender to enable data authentication a
 
 The data can optionally be encrypted by the sender, and the sender is responsible for exchanging the encryption key with the receiver.
 
-While sending standalone S-421 documents without the additional metadata of datasets or exchange sets is preferred, if datasets or exchange sets are used the data (one or more data files) can optionally be packaged and compressed before being signed and sent.
-
 ### Data Signature {#sec:tech_intro_security_data_sign}
 
 ***Reference: IEC 63173-2 SECOM v1.0.0 Clause 7.3 Data authentication and signing***
 
 ***Reference: IHO S-100 ed5.2.0 Part 15-8 Data Authentication***
 
-***Reference: NIST Digital Signature Standard (DSS–FIPS Publication 186***
+***Reference: NIST Digital Signature Standard (DSS–FIPS) Publication 186***
 
 The algorithm for signing data must be ECDSA-384-SHA2.
 
