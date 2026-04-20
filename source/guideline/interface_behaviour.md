@@ -60,7 +60,7 @@ The *Get* operation is used by data consumers for retrieving AtoN information di
 
 The Get operation interface must be implemented only by the data provider.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Get Interface 
   * Sub-path: /v2/object
@@ -87,13 +87,13 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 | --- | --- | ---  | --- |
 | containerType | Integer | 0..1 | Requested encoding of the data as described in [@cite:iec-63173-2]. If not provided, the service provider determines the standard encoding. |
 | dataProductType | String | 0..1 | Data product type as described in [@cite:iec-63173-2]. |
-| productVersion | String | 0..1 | S-100 based Product type version, e.g. 1.0.0. |
+| productVersion | String | 0..1 | S-100 based product type version, e.g. 1.0.0. |
 | dataReference | UUID | 0..1 | Dataset reference identifier to a specific S-125 dataset. The reference can be provided as search criteria. A list of references can be retrieved via Get Summary interface. |
 | geometry | String (WKT) | 0..1| Geometry condition for geo-located information objects in WKT format. This can be used to filter on geometric shapes (e.g., filter S-125 datasets by a bounding box). |
 | unlocode | String | 0..1 | UN/LOCODE (United Nations Code for Trade and Transport Locations) of a defined object (e.g., “CN” for China). |
-| validFrom | DateTime | 0..1| Describes the start of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ. |
-| validTo | DateTime | 0..1 | Describes the end of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ. |
-| page | Integer | 0..1 | The number of the page for retrieving paged results. If not provided, the default value of this parameter is set to zero (0). |
+| validFrom | DateTime | 0..1| Describes the start of the validity period for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mm:ssZ. |
+| validTo | DateTime | 0..1 | Describes the end of the validity period for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mm:ssZ. |
+| page | Integer | 0..1 | The number of the page for retrieving paged results. If not provided, the default value of this parameter is set to one (1). |
 | pageSize | Integer | 0..1 | The size of each page in a paged result. If not provided, the default value of this parameter is not set and the returned S-125 datasets are not paged. |
 
 : The Get Operation Parameters. {#tbl:get_operation_parameters}
@@ -108,15 +108,15 @@ The **dataReference** is used when a known data object is retrieved. The `dataRe
 
 The **containterType** describes how the data is packaged, e.g. 0 for a S-100 DataSet, 1 for a S-100 Exchange-Set or 2 for no specific container, e.g. RTZ in XML.
 
-The **dataProductType** is a string describing which data product that is in focus in the operation. For the purpose of this service design, it must always be "S-125" as per the format specified in S-100 [@cite:iho-s100].
+The **dataProductType** is a string describing which data product exchanged in the operation. For the purpose of this service design, it must always be "S-125" as per the format specified in S-100 [@cite:iho-s100].
 
 The **productVersion** describes the specific version of the data product specification of the data requested.
 
 The **geometry** describes geographical criteria for the data requested. The geometry is given as a one-line WKT formatted string and can contain one or more geospatial objects. 
 
-The **unlocode** describes with 5 characters the UN code for city or other area, such as a port. The `unlocode` is a list administered by UN and can be found online. Many `unlocode`s have a position in longitude/latitude attached, but not all. In most cases the `unlocode` will be used as text only but this may depend on the service developer.
+The **unlocode** describes with 5 characters the UN code for city or other area, such as a port. The `<unlocode>` is a list administered by UN and can be found online. Many `<unlocode>` values have a position in longitude/latitude attached, but not all. In most cases the `<unlocode>` will be used as text only but this may depend on the service developer.
 
-The **validFrom**/**validTo** describes the requested validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ.
+The **validFrom**/**validTo** describes the requested validity date and time for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mm:ssZ.
 
 
 ### Operation Get by Link {#sec:interface_behaviour_operation_get_by_link}
@@ -125,7 +125,7 @@ The *Get by Link* operation is used by data consumers for retrieving large AtoN 
 
 The Get by Link operation interface must be implemented only by the data provider.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Get by Link Interface 
   * Sub-path: /v2/object/link
@@ -135,7 +135,7 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_get_by_link_func}
 
-The operation validates the given `transactionIdentifier` against the caller’s identity and the timeToLive given for the data. The data is then packaged according to agreement in Upload By Link and returned in the call.
+The operation validates the provided `<transactionIdentifier>` against the caller’s identity and the `timeToLive` given for the data. The data is then packaged according to the original Upload By Link request parameters and returned in the response.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_get_by_link_params}
 
@@ -143,8 +143,8 @@ The operation validates the given `transactionIdentifier` against the caller’s
 | --- | --- | ---  | --- |
 | transactionIdentifier | UUID | 1 | Identifier uploaded in Upload Link |
 | envelopeSignatureCertificate | String | 1..* | The public certificate(s) of the sender. Used to verify the envelope signature. |
-| envelopeRootCertificateThumbprint | String| 1 | Claimed Thumbprint for Signed Root Key (X.509 Certificate) SHA256 and base64 as format. |
-| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed envelope. | 
+| envelopeRootCertificateThumbprint | String| 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format. |
+| envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed. | 
 | SignatureReference | String | 1 | Specifies the algorithm used to compute digitalSignatureValue. For example "ECDSA-384-SHA2". |
 
 : The Get By Link Operation Parameters. {#tbl:get_by_link_operation_parameters}
@@ -164,7 +164,7 @@ The *Get Summary* operation is used by data consumers to discover the AtoN infor
 
 The Get Summary operation interface must be implemented only by the data provider.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Get Summary Interface 
   * Sub-path: /v2/object/summary
@@ -183,7 +183,7 @@ If multiple query parameters are provided, only results that match all requested
 Depending on the combination of the  **containterType** and **validFrom**/**validTo** input parameter values, the data provider must respond differently:
 
 * For the **containterType** set to **0** (S-100 Dataset): the service must respond with the latest summary information for all matching S-125 datasets. The **validFrom**/**validTo** should not be taken into account, as the data provider must never return out-of-date information. If however, the specified **dataReference** UUIDs represent the past state of a valid S-125 dataset (with the same MRN), *which has not been cancelled yet*, then the data provider must return the summary information for that exact dataset, once again disregarding the **validFrom**/**validTo** parameters. *The service must never return summary information regarding S-125 **delta** files if the containterType value is set to 0*.
-* For the **containterType** set to **1** (S-100 Exchange-Set): the service must return the dataset summary information using the S-100 Exchange-Set structure. That involves the original content of the S-125 dataset (update 0), along with any incremental updates (for the same dataset MRN) in the form of S-100 ***delta*** files. If the **validFrom**/**validTo** parameters are utilised, any of the original content of the S-125 dataset and delta files should only be included in the Exchange-Set, if they fall within the specified time interval.
+* For the **containterType** set to **1** (S-100 Exchange-Set): the service must return the dataset summary information for all matching S-125 datasets, when packaged using the S-100 Exchange-Set structure. That involves the original content of the S-125 dataset (update 0), along with any incremental updates (for the same dataset MRN) in the form of S-100 ***delta*** files. If the **validFrom**/**validTo** parameters are utilised, any of the original content of the S-125 dataset and delta files should only be included in the Exchange-Set, if they fall within the specified time interval.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_get_summary_params}
 
@@ -191,12 +191,12 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 | --- | --- | ---  | --- |
 | containerType | Integer | 0..1 | Requested encoding of the data as described in [@cite:iec-63173-2]. If not provided, the service provider determines the standard encoding. |
 | dataProductType | String | 0..1 | Data product type as described in [@cite:iec-63173-2]. |
-| productVersion | String | 0..1 | S-100 based Product type version, e.g. 1.0.0. |
+| productVersion | String | 0..1 | S-100 based product type version, e.g. 1.0.0. |
 | geometry | String (WKT) | 0..1| Geometry condition for geo-located information objects in WKT format. This can be used to filter on geometric shapes (e.g., filter S-125 datasets by a bounding box). |
 | unlocode | String | 0..1 | UN/LOCODE | (United Nations Code for Trade and Transport Locations) of a defined object (e.g., “CN” for China). |
-| validFrom | DateTime | 0..1 | Describes the start of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mmZ. |
-| validTo | DateTime | 0..1 | Describes the end of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mmZ. |
-| page | Integer | 0..1 | The number of the page for retrieving paged results. If not provided, the default value of this parameter is set to zero (0). |
+| validFrom | DateTime | 0..1 | Describes the start of the validity period for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mmZ. |
+| validTo | DateTime | 0..1 | Describes the end of the validity period for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mmZ. |
+| page | Integer | 0..1 | The number of the page for retrieving paged results. If not provided, the default value of this parameter is set to one (1). |
 | pageSize | Integer | 0..1 | The size of each page in a paged result. If not provided, the default value of this parameter is not set and the returned S-125 datasets are not paged. |
 
 : The Get Summary Operation Parameters. {#tbl:get_summary_operation_parameters}
@@ -205,26 +205,26 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 
 In the response, the **dataReference** is given as a UUID for each data object listed. The `dataReference` can then be provided as input to a Get call.
 
-The **dataProtection** flag indicates whether the data is encrypted or not. If encrypted, an encryptionKey is required to decrypt the data.
-
-The **compression** flag indicates whether the data is compressed with ZIP or not.
-
 The **dataProductType** and **productVersion** indicate type and version of the data specification for the data object. For the purpose of this service design, the data product type must always be "S-125" as per the format specified in S-100 [@cite:iho-s100].
 
-The **info_identifier**, **info_name**, **info_status**, **info_description**, and **info_lastModifiedData** are describing each matching S-125 dataset. 
+The **validFrom**/**validTo** describe the requested validity date and time for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mm:ssZ.
+
+The **dataProtection** flag in the response indicates whether the data is encrypted or not. If encrypted, an encryptionKey is required to decrypt the data.
+
+The **compression** flag in the response indicates whether the data is compressed with ZIP or not.
+
+The **info_identifier**, **info_name**, **info_status**, **info_description**, and **info_lastModifiedData** in the response are describing each matching S-125 dataset. 
 
 The **info_size** represents the file size of the S-125 dataset, as returned by Get data. The size does not include the envelope.
-
-The **validFrom**/**validTo** describes the requested validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ.
 
 
 ### Operation Subscription {#sec:interface_behaviour_operation_subscription}
 
-The purpose of the *Subscription* operation is for service consumers to request a new or cancel an existing subscription on AtoN information. Subscriptions are made either on specific parameters, otherwise these are decided by the data provider.
+The purpose of the *Subscription* operation is for service consumers to request a new subscription on AtoN information. Subscriptions are made on specific parameters, otherwise these are decided by the data provider.
 
 The Subscription operation interface must be implemented only by the data provider.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Subscription Interface 
   * Sub-path: /v2/subscription
@@ -242,7 +242,7 @@ The service needs to keep track of the following operations:
 * Changes between two points in time (S-125 delta files)
 * Cancellation of datasets
 
-Once the subscription request is received and processed successfully, the service will create a new subscription record for the respective client and return a unique UUID identifier for that record. The response containing with the generated are presented in the example service response.
+Once the subscription request is received and processed successfully, the service will create a new subscription record for the respective client and return a unique UUID identifier for that record.
 
 A subscription can be cancelled through the *Remove Subscription* operation. More information can be found in [@sec:interface_behaviour_operation_remove_subscription].
 
@@ -251,7 +251,7 @@ The operation interface consumes the following consumer interfaces:
 * Upload
 * Subscription Notification
 
-The Upload consumer interface can be used by the data provider to push new and/or updated S-125 datasets to the subscribed service consumer. The Subscription Notification consumer interface on the other hand, is used to inform the consumer that on the status of the subscription, i.e., when it has been successfully activated or removed. More information on this operation can be found in [@sec:dynamic_behaviour_client_init_retrieval]. Note that for each new subscription, a Subscription Identifier should be made available to the consumer though the interface’s response.
+The Upload consumer interface can be used by the data provider to push new and/or updated S-125 datasets to the subscribed service consumer. The Subscription Notification consumer interface on the other hand, is used to inform the consumer that on the status of the subscription, i.e., when it has been successfully activated or removed. More information on this operation can be found in [@sec:dynamic_behaviour_client_init_retrieval]. Note that for each new subscription, a UUID subscription identifier should be made available to the consumer though the operation's response.
 
 The operation supports multiple filter parameters, presented in more detail in [@tbl:get_subscription_operation_parameters]. To ensure the authenticity of the operation request, the filter parameters are included within a signed SECOM envelope structure. Data provider instances are required to support all referenced filter parameters.
 
@@ -263,43 +263,43 @@ All criteria for the subscription are optional. If none are provided, all author
 | --- | --- | ---  | --- |
 | containerType | Integer | 0..1 | Requested encoding of the data as described in [@cite:iec-63173-2]. If not provided, the service provider determines the standard encoding. |
 | dataProductType | String | 0..1 | Data product type as described in [@cite:iec-63173-2]. |
-| productVersion | String | 0..1 | S-100 based Product type version, e.g. 1.0.0. |
-| dataReference | UUID | 0..1 | Dataset reference identifier to a specific S-125 dataset. The reference can be provided as search criteria. A list of references can be retrieved via Get Summary interface. If no references are provided. |
+| productVersion | String | 0..1 | S-100 based product type version, e.g. 1.0.0. |
+| dataReference | UUID | 0..1 | Dataset reference identifier to a specific S-125 dataset. The reference can be provided as search criteria. A list of references can be retrieved via Get Summary interface. |
 | geometry | String (WKT) | 0..1| Geometry condition for geo-located information objects in WKT format. This can be used to filter on geometric shapes (e.g., filter S-125 datasets by a bounding box). |
 | unlocode | String | 0..1 | UN/LOCODE (United Nations Code for Trade and Transport Locations) of a defined object (e.g., “CN” for China). |
 | subscriptionPeriodStart | DateTime | 0..1 | The start date and time for which the subscription is active. |
 | subscriptionPeriodEnd | DateTime | 0..1 | The end date and time for which the subscription is active. |
-| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service Attribute Messages within subscription are sent to callbackEndpoint/object. If not available, the baseUrl needs to be available through search service. |
+| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service. Messages within subscription are sent to callbackEndpoint/object. If not available, the baseUrl needs to be available through search service. |
 | pushAll | Boolean | 0..1 | Flag for sending an initial set of data within requested subscription and then start the subscription.<br/> If false, only data updates from the start of the subscription will be sent. |
 
 : The Subscription Operation Parameters. {#tbl:get_subscription_operation_parameters}
 
 #### Interpretation Guidelines {#sec:interface_behaviour_operation_subscription_guide}
 
-The **dataReference** criteria means that only new updates of the specific S-125 dataset will be sent in the subscription. If the `dataReference` dataset is cancelled or deleted, the subscription ends.
+The **dataReference** criteria means that only new updates of the specific S-125 dataset will be sent in the subscription. If the `<dataReference>` dataset is cancelled or deleted, the subscription ends.
 
 The **containterType** describes how the data is packaged, e.g. 0 for a S-100 DataSet, 1 for a S-100 Exchange-Set or 2 for no specific container, e.g. RTZ in XML.
 
-The **dataProductType** and **productVersion** criteria means that only information of the type and version will be sent in the subscription. For the purpose of this service design, the data product type must always "S-125" as per the format specified in S-100 [@cite:iho-s100].
+The **dataProductType** and **productVersion** criteria means that only information of the type and version specified will be sent to the subscription consumer. For the purpose of this service design, the data product type must always "S-125" as per the format specified in S-100 [@cite:iho-s100].
 
 The **geometry** describes geographical criteria for the data requested. The geometry is given as a one-line WKT formatted string and can contain one or more geographical objects. 
 
-The **unlocode** criteria means that only information related to the `unlocode` will be sent in the subscription. If there is no unlocode related to the information provided by the service, the `unlocode` is ignored.
+The **unlocode** criteria means that only information related to the `<unlocode>` will be sent in the subscription. If there is no unlocode related to the information provided by the service, the `<unlocode>` is ignored.
 
-The **subscriptionPeriodStart** and **subscriptionPeriodEnd** criteria mean that data produced in the given time period will be sent in the subscription. When subscriptionPeriodEnd is reached, the subscription shall be removed automatically. The time period is recommended to be formatted in ISO 8601 UTC as yyyy-mm-dd hh:mm:ssZ.
+The **subscriptionPeriodStart** and **subscriptionPeriodEnd** criteria mean that data produced in the given time period will be sent to the subscription. When the subscriptionPeriodEnd is reached, the subscription shall be removed automatically. The time period is recommended to be formatted in ISO 8601 UTC as yyyy-mm-dd hh:mm:ssZ.
 
-The **callbackEndpoint** optionally contains the URL of the data consumers. The service may use that information to contact the data consumer when updates are available for an established subscription. If that information is not available, the data provider should search for the data consumer using the provided MRN in the appropriate Service Registry (e.g. MSR).
+The **callbackEndpoint** optionally contains the URL of the data consumer. The service may use that information to contact the data consumer when updates are available for an established subscription. If that information is not available, the data provider should search for the data consumer endpoint using the consumer's MRN in the appropriate Service Registry (e.g. MSR).
 
 The **pushAll** flag signals that the service is expected push the latest S-125 datasets covered by a subscription to the data consumer, right after the subscription has been established. This removes the requirement for data consumers to always pull the data manually when creating a subscription.
 
 
 ### Operation Remove Subscription {#sec:interface_behaviour_operation_remove_subscription}
 
-The *Remove Subscription* operation can be used to remove subscriptions that were created earlier through the Subscribe operation. It follows a one-way paradigm (ONE_WAY), where a client sends data to consumer without expecting information back, other than a technical response. 
+The *Remove Subscription* operation can be used to remove subscriptions that were created earlier through the Subscription operation. It follows a one-way paradigm (ONE_WAY), where a client sends data to consumer without expecting information back, other than a technical response. 
 
 The Remove Subscription operation interface must be implemented only by the data provider.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Remove Subscription Interface 
   * Sub-path: /v2/subscription
@@ -315,7 +315,7 @@ The operation interface consumes the following consumer interfaces:
 
 * Subscription Notification
 
-The Subscription Notification consumer interface is used to inform the consumer that on the status of the subscription, i.e. when it has been successfully removed.
+The Subscription Notification consumer interface is used to inform the consumer on the status of the subscription, i.e. when it has been successfully removed.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_remove_subscription_params}
 
@@ -332,11 +332,11 @@ The incoming ***subscriptionIdentifier*** given when the subscription was create
 
 ### Operation Subscription Notification {#sec:interface_behaviour_operation_subscription_notification}
 
-The *Subscription Notification* operation receives notifications by data provider, when a subscription is created or removed.
+The *Subscription Notification* operation enables notifications by the data provider, when a subscription is created or removed.
 
 The Subscription Notification operation interface must be implemented only by the data consumer.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Subscription Notification Interface 
   * Sub-path: /v2/subscription/notification
@@ -346,9 +346,9 @@ Use of the interface is according to the SECOM specification.
   
 #### Operation Functionality {#sec:interface_behaviour_operation_subscription_notification_func}
 
-The data provider is not required to call the subscriptionNotification of the consumer unless the creation or removal of the subscription requires asynchronous action or is the result of a maintenance operation. If the subscription and removeSubscription are synchronous processes when called from the data provider, then the subscriptionNotification is not required.
+The data provider is not required to call the subscriptionNotification of the consumer unless the creation or removal of the subscription requires asynchronous action or is the result of a scheduled/unscheduled maintenance operation. If the subscription and removeSubscription are synchronous processes when called from the data provider, then the subscriptionNotification is not required.
 
-The operation two parameters, presented in more detail in [@tbl:subscription_notification_operation_parameters]. To ensure the authenticity of the operation request, these parameters are included within a signed SECOM envelope structure.
+The two parameters of the operation are presented in more detail in [@tbl:subscription_notification_operation_parameters]. To ensure the authenticity of the operation request, these parameters are included within a signed SECOM envelope structure.
 
 #### Operation Parameters {#sec:interface_behaviour_operation_subscription_notification_params}
 
@@ -368,11 +368,11 @@ The **eventEnum** describes the type of event, e.g. 1 when the subscription is c
 
 ### Operation Upload {#sec:interface_behaviour_operation_upload}
 
-The *Upload* operation enables data providers to upload (push) AtoN information to the data consumers. It allows consumers to receive S-125 datasets, while in a subscription or a due to a broadcast.
+The *Upload* operation enables data providers to upload (push) AtoN information to the data consumers. It allows consumers to receive S-125 datasets, while in a subscription or a due to a broadcast (not currently supported).
 
 The Upload operation interface must be implemented only by the data consumers.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Upload Interface 
   * Sub-path: /v2/object
@@ -382,7 +382,7 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_upload_func}
 
-In most cases this operation will take place as part of a subscription, originally initiated by the data consumer. In those cases the `fromSubscription` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
+NOrmally this operation will take place as part of a subscription, originally initiated by the data consumer. In those cases the `<fromSubscription>` parameters is expected to be set to `true`. In future implementations however, there might be cases where urgent AtoN information will need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
 
 This interface operation may on request consume the following provider interfaces:
 
@@ -405,10 +405,10 @@ The operation supports multiple other parameters, which are presented in more de
 | fromSubscription | Boolean | 1 | A flag that indicates whether the data has been uploaded within an active subscription or not. |
 | subscriptionIdentifier | UUID | 0..1 | Subscription identifier is specified if the object is uploaded within a subscription. |
 | ackRequest | AckRequestEnum as defined in [@cite:iec-63173-2] | 1 | Flag to indicate that acknowledgement is expected to be returned when the data is delivered to the end user, and/or when the content of the data is processed (opened) by the end user.|
-| callbackEndpoint | URL | 0..1 | Base URL without trailing slash to the requestor SECOM service Endpoint where to send an acknowledgement. If not available, the endpoint needs to be available through the search service. |
+| callbackEndpoint | URL | 0..1 | Base URL to the requestor's SECOM service. If not available, the baseUrl needs to be available through search service. |
 | transactionIdentifier | UUID | 1 | Unique transaction UUID to be used e.g. in acknowledgement. |
 | envelopeSignatureCertificate | String | 1..* | The public certificate(s) of the sender. Used to verify the envelope object signature. |
-| envelopeRootCertificateThumbprint | String | 1 | Claimed Thumbprint for Signed Root Key (X.509 Certificate) SHA256 and base64 as format |
+| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format |
 | envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed. |
 | envelopeSignatureReference | String | 1 | (S-100) Specifies the algorithm used to compute the envelopeSignature For example "ECDSA-384-SHA2". |
 
@@ -427,7 +427,7 @@ The *Upload by Link* operation enables data providers to provide a link to large
 
 The Upload by Link operation interface must be implemented only by the data consumers.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Upload by Link Interface 
   * Sub-path: /v2/object/link
@@ -437,15 +437,15 @@ Use of the interface is according to the SECOM specification.
 
 #### Operation Functionality {#sec:interface_behaviour_operation_upload_by_link_func}
 
-In most cases the Upload by Link operation will take place as part of a subscription, initiated by the data consumer. It must be used instead of the Upload operation when the S-125 datasets to be transmitted exceed 350 kbs. In those cases, the `fromSubscription` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
+In most cases the Upload by Link operation will take place as part of a subscription, initiated by the data consumer. It must be used instead of the Upload operation when the S-125 datasets to be transmitted exceed 350 kbs. In those cases, the `<fromSubscription>` parameters is expected to be set to `true`. There might however, be cases where urgent AtoN information might need to be broadcasted, therefore data consumer uploads may also take place outside active subscriptions. These cases however are not covered by this service design.
 
 This interface operation may on request consume the following provider interfaces:
 
 * Acknowledgement
 
-In an upload by link operation, an acknowledgement can be requested via the `ackRequest` parameter. The acknowledgment is expected to be received when the uploaded S-125 dataset has been delivered to the end‑system (technical acknowledgement), and/or (if supported) when the message has been opened/read by the end‑user (operational acknowledgement).
+In an upload by link operation, an acknowledgement can be requested via the `<ackRequest>` parameter. The acknowledgment is expected to be received when the uploaded S-125 dataset has been delivered to the end‑system (technical acknowledgement), and/or (if supported) when the message has been opened/read by the end‑user (operational acknowledgement).
 
-The data consumer may then use the URL available in the `callbackEndpoint` parameter to contact the data provider directly and get the advertised S-125 datasets, as well as send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the server URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the HTTPS request certificate provided during the TLS/SSL authentication step, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
+The data consumer may then use the URL available in the `<callbackEndpoint>` parameter to contact the data provider directly and get the advertised S-125 datasets, as well as send the required acknowledgement. In the absence of a valid callback endpoint value, the data consumer may discover the server URL utilising an appropriate Service Registry (e.g. MSR). The data provider can be identified through its MRN, contained in the HTTPS request certificate provided during the TLS/SSL authentication step, as in [@sec:interface_behaviour_operation_subscription_func]. More information on the dynamic behaviour of this operation and its relation to the SECOM-compliant service registry is provided in [@sec:dynamic_behaviour_client_init_retrieval].
 
 As in the Upload operation described previously, this operation supports multiple other parameters, which are presented in more detail in [@tbl:upload_by_link_operation_parameters]. To ensure the authenticity of the operation request, these parameters are included within a signed SECOM envelope structure.
 
@@ -462,7 +462,7 @@ As in the Upload operation described previously, this operation supports multipl
 | callbackEndpoint | URL | 0..1 | Base URL without trailing slash to the requestor SECOM service Endpoint where to send an acknowledgement. If not available, the endpoint needs to be available through the search service. |
 | transactionIdentifier | UUID | 1 | Unique transaction UUID to be used e.g. in acknowledgement. |
 | envelopeSignatureCertificate | String | 1..* | The public certificate(s) of the sender. Used to verify the envelope object signature. |
-| envelopeRootCertificateThumbprint | String | 1 | Claimed Thumbprint for Signed Root Key (X.509 Certificate) SHA256 and base64 as format |
+| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format |
 | size |  Integer | 1 | Size of the data in kBytes to be downloaded. |
 | timeToLive | DateTime | 1 | Timestamp when data will be deleted on server. The data need to be fetched before this time. |
 | envelopeSignatureTime | DateTime | 1 | Timestamp when the envelope is signed. |
@@ -483,7 +483,7 @@ The *Acknowledgment* operation allows data consumers to asynchronously confirm w
 
 It is not yet clear on whether acknowledgements are necessary for the provision of AtoN information to end-users. Regardless, for the purposes of this service design,the Acknowledgment operation interface must be implemented only by the data consumers.
 
-Use of the interface is according to the SECOM specification.
+According to the SECOM specification, the interface definition is the following:
 
   * Name: Acknowledgment Interface 
   * Sub-path: /v2/acknowledgement
@@ -501,7 +501,7 @@ The operation validates the given `transactionIdentifier` and handles the acknow
 | --- | --- | ---  | --- |
 | createdAt | DateTime | 1 | Creation time for the acknowledgement. |
 | envelopeCertificate | String | 1..* | The public certificate of the sender. used to verify the envelope signature |
-| envelopeRootCertificateThumbprint | String | 1 | Claimed Thumbprint for Signed Root Key (X.509 Certificate) SHA256 and base64 as format. |
+| envelopeRootCertificateThumbprint | String | 1 | Claimed thumbprint for Signed Root Key (X.509 Certificate) SHA256 and Base64 as format. |
 | transactionIdentifier | String | 1 |  Reference identifier given in upload. |
 | ackType | AckTypeEnumType as defined in [@cite:iec-63173-2] | 1 | Type of of acknowledgement. |
 | nackType | NackTypeEnum as defined in [@cite:iec-63173-2] | 0..1 | NackTypeEnum Information details if error. |
