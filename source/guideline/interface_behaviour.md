@@ -91,10 +91,10 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 | dataReference | UUID | 0..1 | Dataset reference identifier to a specific S-125 dataset. The reference can be provided as search criteria. A list of references can be retrieved via Get Summary interface. |
 | geometry | String (WKT) | 0..1| Geometry condition for geo-located information objects in WKT format. This can be used to filter on geometric shapes (e.g., filter S-125 datasets by a bounding box). |
 | unlocode | String | 0..1 | UN/LOCODE (United Nations Code for Trade and Transport Locations) of a defined object (e.g., “CN” for China). |
-| validFrom | DateTime | 0..1| Describes the start of the validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ. |
-| validTo | DateTime | 0..1 | Describes the end of the validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ. |
+| validFrom | DateTime | 0..1| Describes the start of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ. |
+| validTo | DateTime | 0..1 | Describes the end of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mm:ssZ. |
 | page | Integer | 0..1 | The number of the page for retrieving paged results. If not provided, the default value of this parameter is set to zero (0). |
-| pageSize | Integer | 0..1 | The size of each page in a paged result. If not provided, the default value of this parameter is not set and the resulting S-125 datasets are not paged. |
+| pageSize | Integer | 0..1 | The size of each page in a paged result. If not provided, the default value of this parameter is not set and the returned S-125 datasets are not paged. |
 
 : The Get Operation Parameters. {#tbl:get_operation_parameters}
 
@@ -194,10 +194,10 @@ Depending on the combination of the  **containterType** and **validFrom**/**vali
 | productVersion | String | 0..1 | S-100 based Product type version, e.g. 1.0.0. |
 | geometry | String (WKT) | 0..1| Geometry condition for geo-located information objects in WKT format. This can be used to filter on geometric shapes (e.g., filter S-125 datasets by a bounding box). |
 | unlocode | String | 0..1 | UN/LOCODE | (United Nations Code for Trade and Transport Locations) of a defined object (e.g., “CN” for China). |
-| validFrom | DateTime | 0..1 | Describes the start of the validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mmZ. |
-| validTo | DateTime | 0..1 | Describes the end of the validity time for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mmZ. |
+| validFrom | DateTime | 0..1 | Describes the start of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mmZ. |
+| validTo | DateTime | 0..1 | Describes the end of the validity period for the requested data in ISO 8601 UTC formatted as yyyy-mm-dd hh:mmZ. |
 | page | Integer | 0..1 | The number of the page for retrieving paged results. If not provided, the default value of this parameter is set to zero (0). |
-| pageSize | Integer | 0..1 | The size of each page in a paged result. If not provided, the default value of this parameter is not set and the resulting S-125 datasets are not paged. |
+| pageSize | Integer | 0..1 | The size of each page in a paged result. If not provided, the default value of this parameter is not set and the returned S-125 datasets are not paged. |
 
 : The Get Summary Operation Parameters. {#tbl:get_summary_operation_parameters}
 
