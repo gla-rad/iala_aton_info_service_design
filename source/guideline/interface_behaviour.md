@@ -4,7 +4,7 @@
 
 As defined by SECOM, all communication between the components of the service that are in the scope of this design document is achieved via REST calls.
 
-Additional information on the interfaces and parameters is available in the attached OpenAPI template of service in the Annex A.
+Additional information on the interfaces and parameters is available in the attached OpenAPI specification of the service in the Annex A. Note that not all interfaces are covered by the OpenAPI specification, as the SECOM standard is still being developed.
 
 ## Common {#sec:interface_behaviour_common}
 
