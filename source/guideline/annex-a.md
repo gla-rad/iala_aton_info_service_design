@@ -8,7 +8,7 @@
   "info": {
     "title": "AtoN Service - SECOM v2.0 Interfaces",
     "description": "The SECOM V2 interfaces of the AtoN Service",
-    "termsOfService": "https://www.iala.int/,
+    "termsOfService": "https://www.iala.int/",
     "contact": {
       "email": "email@iala.int"
     },
