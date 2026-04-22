@@ -105,7 +105,7 @@ The Get Summary operation accepts similar operation parameters as Get/Get by Lin
 
 ## Subscription-based AtoN Information Propagation {#sec:dynamic_behaviour_subscription_retrieval}
 
-The subscription on AtoN Information is an alternative method of data propagation, in which a data consumer actively registers its interest to receive updates either on a specific S-125 dataset or alternatively, on all available S-125 datasets. This operation covers Use ***Case #3***, as outlined in [@cite:iala-aton_info_service_spec].
+The subscription on AtoN Information is an alternative method of data propagation, in which a data consumer actively registers its interest to receive updates either on a specific S-125 dataset or alternatively, on all available S-125 datasets. This operation covers ***Use Case #3***, as outlined in [@cite:iala-aton_info_service_spec].
 
 [@fig:dynamic_behaviour_get_summary_operation] illustrates the typical behaviour of the subscription operation. Initially, the data consumer is required to initiate the process through the Subscription operation of the data sender. Utilising the available operation parameters such as the geometry, the UN/LOCODE and the subscription period, updates only on the S-125 datasets matching the specified criteria will be provided. Once the subscription request has been received, processed and accepted by the data server, a notification may be sent back to the data consumer, using its Subscription Notification operation. This notification will indicate that the requested subscription has commenced and should include the UUID identifier reference of the established subscription.
 
