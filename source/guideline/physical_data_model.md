@@ -20,6 +20,8 @@ Since the main purpose of the discussed service is to provide AtoN information t
 
 All AtoN information that is sent for use and display on an ECDIS should always be packaged using an S-100 Exchange Set structure. All other cases, including third-party Electronic Chart Systems (ECS), may make use of the plain S-100 Dataset packaging option.
 
+In version 1.0.0 of S-125 a new feature class `AtoNStatusIndication` was introduced, as per the NIPWG S-125 Interoperability Guide document[@cite:iho-s125-interoperability-guide]. This allows the display of AtoN status changes directly on the ECDIS, without the requirement for the associated AtoN features to also be included in the dataset. This results in significantly smaller S-125 datasets, where only AtoN status changes are exchanged. Another benefit of this approach is that S-125 can support both uses, as an overlay in ECDIS and secondary use-cases.
+
 ## Service Internal Data Model
 
 As the S-125 data model, used to represent the transmitted data, is developed independently from this service specification, the internal data model of the service should be adequate to generate the required S-125 datasets. In addition, a way to store service metadata that are not directly related to the data model (internal service identifies, signatures, etc.) is required. For further information, please refer to IALA Guideline 1157 [@cite:iala-g1157]. However, these metadata are mostly implementation specific and therefore are not discussed in this service specification. Examples on how to implement this functionality can also be found in the IHO S-100 data model specification [@cite:iho-s100], as well as the SECOM standard [@cite:iec-63173-2].

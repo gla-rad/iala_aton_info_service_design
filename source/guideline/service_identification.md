@@ -16,10 +16,10 @@ This section provides a unique identification of the service and describes where
   <td>IALA Marine Aids to Navigation (AtoN) Service Specification</td>
 </tr>
 <tr>
-  <td>Provision of AtoN Information to End-Users</td>
+  <td>Service for the Provision of AtoN information to End-Users</td>
 </tr>
 <tr>
-  <td>urn:mrn:iala:techsvc:ss:arm:atoninfo:1.0</td>
+  <td>urn:mrn:iala:techsvc:ss:arm:atoninfo:1.1</td>
 </tr>
 <tr>
   <th rowspan="1">Version</th>
@@ -27,15 +27,15 @@ This section provides a unique identification of the service and describes where
 </tr>
 <tr>
   <th rowspan="1">Description</th>
-  <td>Technical Design for the provision of AtoN information to end-users via web services, using the IEC 63173-2 (SECOM) communication standard.</td>
+  <td>This is a standardized service for the provision of Marine Aids-to-Navigation (AtoN) information, using the IEC 63173-2 (SECOM) communication standard. The provided AtoN information follows IHO S-125 and is intended to be used as an overlay to ENC within a navigation system.</td>
 </tr>
 <tr>
   <th rowspan="1">Keywords</th>
-  <td>REST, SECOM, MS2, ARM, AtoN, Aids to Navigation, S-125</td>
+  <td>S-125, Marine Aids-to-Navigation, MS-2, REST, SECOM, ARM, AtoN</td>
 </tr>
 <tr>
   <th rowspan="1">Architects</th>
-  <td>Nikolaos Vastardis</td>
+  <td>IALA ARM WG2</td>
 </tr>
 <tr>
   <th rowspan="1">Status</th>

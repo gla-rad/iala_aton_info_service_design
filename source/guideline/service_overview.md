@@ -47,4 +47,4 @@ In this service design we will not define the communication between the data pro
 
 Services implemented according to this design must submit their instance description to a valid service registry that follows the IALA G1129 Maritime Service Registry (MSR) [@cite:iala-g1191] technical specification.
 
-An XML template for the instance description is provided as an annex to this design in ANNEX B [@sec:g1128-instance-desc].
+An XML template for the instance description is provided as an annex to this design in ANNEX B.
