@@ -32,13 +32,9 @@ For SECOM v2.0 services only:
 
 ###	Error codes {#sec:interface_behaviour_common_error_codes}
 
-If the incoming AtoN dataset does not pass the business rule validation, the SECOM_ResponseCode must be 0.
-
 If the signature verification fails, the SECOM_ResponseCode must be 1.
 
 If the certificate provided is invalid, the SECOM_ResponseCode must be 2.
-
-If the incoming AtoN dataset does not pass the schema validation, the SECOM_ResponseCode must be 3.
 
 In all of these cases, the response returned to the consumer must have the HTTP status 400.
 
@@ -120,12 +116,12 @@ The **unlocode** describes with 5 characters the UN code for city or other area,
 
 The **validFrom**/**validTo** describes the requested validity date and time for the requested data in ISO 8601 UTC format as yyyy-mm-dd hh:mm:ssZ.
 
-The **atonDetails** parameter has been introduced in response to the S-125 v1.0.0 and v2.0.0 scope changes, to support Use-Case #1 of the service specification. **The implementation of tis operation parameter is optional**. By default the service should respond with datasets containing only the AtoN status indicator information. However, if the service provided chooses so, this parameter can be used to allow the provision of the extended S-125 datasets. These S-125 datasets would contain the full AtoN design state information, including all AtoN (structure and equipment) feature types involved.
+The **atonDetails** parameter has been introduced in response to the S-125 v1.0.0 and v2.0.0 scope changes, to support Use-Case #1 of the service specification. **The implementation of this parameter is optional**. By default the service should respond with datasets containing only the AtoN status indicator information. However, if the service provided chooses so, this parameter can be used to allow the provision of the extended S-125 datasets. These S-125 datasets would contain the full AtoN design state information, including all AtoN (structure and equipment) feature types involved.
 
 
 ### Operation Get by Link {#sec:interface_behaviour_operation_get_by_link}
 
-The *Get by Link* operation is used by data consumers for retrieving large AtoN information datasets directly from a data provider. This interface shall be used instead of the Get, when the size of the data to be exchanged exceeds the SECOM limit (i.e. 350kbs). The consumer in this case cannot filter the pre-prepared results any further.
+The *Get by Link* operation is used by data consumers for retrieving large AtoN information datasets directly from a data provider. This interface shall be used instead of the Get, when the size of the data to be exchanged exceeds the SECOM limit (i.e. 350KB). The consumer in this case cannot filter the pre-prepared results any further.
 
 The Get by Link operation interface must be implemented only by the data provider.
 
@@ -221,7 +217,7 @@ The **info_identifier**, **info_name**, **info_status**, **info_description**, a
 
 The **info_size** represents the file size of the S-125 dataset, as returned by Get data. The size does not include the envelope.
 
-The **atonDetails** parameter has been introduced in response to the S-125 v1.0.0 and v2.0.0 scope changes, to support Use-Case #1 of the service specification. **The implementation of tis operation parameter is optional**. By default the service should respond with the summary information for datasets containing only the AtoN status indicator information. However, if the service provided chooses so, this parameter can be used to allow the provision of summary information for the extended S-125 datasets. These S-125 datasets would contain the full AtoN design state information, including all AtoN (structure and equipment) feature types involved.
+The **atonDetails** parameter has been introduced in response to the S-125 v1.0.0 and v2.0.0 scope changes, to support Use-Case #1 of the service specification. **The implementation of this operation parameter is optional**. By default the service should respond with the summary information for datasets containing only the AtoN status indicator information. However, if the service provided chooses so, this parameter can be used to allow the provision of summary information for the extended S-125 datasets. These S-125 datasets would contain the full AtoN design state information, including all AtoN (structure and equipment) feature types involved.
 
 
 ### Operation Subscription {#sec:interface_behaviour_operation_subscription}
@@ -299,7 +295,7 @@ The **callbackEndpoint** optionally contains the URL of the data consumer. The s
 
 The **pushAll** flag signals that the service is expected push the latest S-125 datasets covered by a subscription to the data consumer, right after the subscription has been established. This removes the requirement for data consumers to always pull the data manually when creating a subscription.
 
-The **atonDetails** parameter has been introduced in response to the S-125 v1.0.0 and v2.0.0 scope changes, to support Use-Case #1 of the service specification. **The implementation of tis operation parameter is optional**. By default the service should respond with datasets containing only the AtoN status indicator information. However, if the service provided chooses so, this parameter can be used to allow the provision of the extended S-125 datasets. These S-125 datasets would contain the full AtoN design state information, including all AtoN (structure and equipment) feature types involved.
+The **atonDetails** parameter has been introduced in response to the S-125 v1.0.0 and v2.0.0 scope changes, to support Use-Case #1 of the service specification. **The implementation of this operation parameter is optional**. By default the service should respond with datasets containing only the AtoN status indicator information. However, if the service provided chooses so, this parameter can be used to allow the provision of the extended S-125 datasets. These S-125 datasets would contain the full AtoN design state information, including all AtoN (structure and equipment) feature types involved.
 
 
 ### Operation Remove Subscription {#sec:interface_behaviour_operation_remove_subscription}

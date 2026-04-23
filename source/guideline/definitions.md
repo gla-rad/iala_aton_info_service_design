@@ -2,7 +2,7 @@
 
 # Definitions
 
-The definitions of terms used in this IALA Guideline can be found in the International Dictionary of Marine Aids to Navigation (IALA Dictionary) and were checked as correct at the time of going to print.  Where conflict arises, the IALA Dictionary shall be considered as the authoritative source of definitions used in IALA documents.
+The definitions of terms used in this IALA service design can be found in the International Dictionary of Marine Aids to Navigation (IALA Dictionary) and were checked as correct at the time of going to print.  Where conflict arises, the IALA Dictionary shall be considered as the authoritative source of definitions used in IALA documents.
 
 <div id="html_table" caption="List of Definitions.">
 <table>
