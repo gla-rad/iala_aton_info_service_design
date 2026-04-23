@@ -9,14 +9,14 @@ This section provides a unique identification of the service and describes where
 <tbody>
 <tr>
   <th rowspan="1">Name</th>
-  <td>Provision of AtoN Information Service to End-users over IEC 63173-2 (SECOM)</td>
+  <td>Service for the Provision of AtoN Information to End-users over IEC 63173-2 (SECOM)</td>
 </tr>
 <tr>
   <th rowspan="3">Implements</th>
-  <td>IALA Marine Aids to Navigation (AtoN) Service Specification</td>
+  <td>Marine Aids to Navigation (AtoN) Service Specification</td>
 </tr>
 <tr>
-  <td>Service for the Provision of AtoN information to End-Users</td>
+  <td>Service for the Provision of AtoN Information to End-Users</td>
 </tr>
 <tr>
   <td>urn:mrn:iala:techsvc:ss:arm:atoninfo:1.1</td>

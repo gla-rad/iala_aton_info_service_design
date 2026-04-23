@@ -1,7 +1,7 @@
 ---
 # Document title and subtitle
-title: "IALA Marine Aids to Navigation (AtoN) Service Design"
-subtitle: "Provision of AtoN information to End-Users using IEC 63173-2 (SECOM)"
+title: "Marine Aids to Navigation (AtoN) Service Design"
+subtitle: "Service for the Provision of AtoN Information to End-Users using IEC 63173-2 (SECOM)"
 # Suppress figure caption titles as Word will add them automatically
 figureTemplate: "$$t$$"
 # Define the figure reference prefixes
